@@ -10,9 +10,10 @@ int main (int ac, char **av)
     else
     {
         t_scene scene;
-        parse_properties(av, scene);
+
+        parse(av, scene);
         init_mlx(scene.mlx);
-        init_viewport(scene.camera);
+        init_camera(scene.camera);
         render(scene);
         //mlx_loop();
         return (0);
