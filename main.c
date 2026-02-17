@@ -1,4 +1,4 @@
-
+#include "main.h"
 
 int main (int ac, char **av)
 {
@@ -9,7 +9,12 @@ int main (int ac, char **av)
     }
     else
     {
-        parse_properties(av);
+        t_scene scene;
+        parse_properties(av, scene);
+        init_mlx(scene.mlx);
+        init_viewport(scene.camera);
+        render(scene);
+        //mlx_loop();
         return (0);
     }
 }
