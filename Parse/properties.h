@@ -14,7 +14,7 @@ struct typedef s_camera
 {
     char *id;
     t_vector *viewpoint;
-    t_vector *orentation;
+    t_vector *orientation;
     int fov;
 } t_camera;
 

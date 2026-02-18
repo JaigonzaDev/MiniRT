@@ -1,35 +1,5 @@
 #include "main.h"
 
-void parse_ambient(char *line, t_ambient *scene)
-{
-
-}
-
-void parse_camera(char *line, t_camera *scene)
-{
-
-}
-
-void parse_light(char *line, t_light *scene)
-{
-
-}
-
-void parse_sphere(char *line, t_sphere *scene)
-{
-
-}
-
-void parse_plane(char *line, t_plane *scene)
-{
-
-}
-
-void parse_cylinder(char *line, t_cylinder *scene)
-{
-
-}
-
 void parse_proporties(char *line, t_scene *scene)
 {
     while (*line != NULL) 
@@ -40,11 +10,11 @@ void parse_proporties(char *line, t_scene *scene)
             parse_camera(scene->camera);
         else if (*line == 'L')
             parse_light(scene->light);
-        else if (ft_strncmp(sp))
+        else if (ft_strncmp(*line, "sp"))
             parse_sphere(scene->sphere);
-        else if (ft_strncmp(pl))
+        else if (ft_strncmp(*line, "pl"))
             parse_plane(scene->plane);
-        else if (ft_strncmp(cy))
+        else if (ft_strncmp(*line, "cy"))
             parse_cylinder(scene->cylinder);
         else
             ft_printf("Error: Properties not well defined\n");
