@@ -3,14 +3,14 @@ void parse_sphere(char *line, t_sphere *scene)
 {
     if (scene != NULL)
         printf("Error: Already Assigned");
-    scene->id = 'L';
+    scene->id = "sp";
     skip_spaces(*line);
-    scene->light_point = ft_atoi();
+    insert_data_vector(line, scene->center);
     skip_spaces(*line);
-    scene->brightness = ft_atoi();
+    scene->diameter = ft_atoi();
     skip_spaces(*line);
-    scene->rgb = ft_atoi();
-
+    scene->height = ft_atoi();
+    insert_data_vector(line, scene->rgb);
 }
 
 void parse_plane(char *line, t_plane *scene)
@@ -18,12 +18,9 @@ void parse_plane(char *line, t_plane *scene)
     if (scene != NULL)
         printf("Error: Already Assigned");
     scene->id = 'pl';
-    skip_spaces(*line);
-    scene->point = ft_atoi();
-    skip_spaces(*line);
-    scene->normalized = ft_atoi();
-    skip_spaces(*line);
-    scene->rgb = ft_atoi();
+    insert_data_vector(line, scene->point);
+    insert_data_vector(line, scene->normalized);
+    insert_data_vector(line, scene->rgb);
 }
 
 void parse_cylinder(char *line, t_cylinder *scene)
@@ -32,13 +29,10 @@ void parse_cylinder(char *line, t_cylinder *scene)
         printf("Error: Already Assigned");
     scene->id = 'cy';
     skip_spaces(*line);
-    scene->center = ft_atoi(); // Vector
-    skip_spaces(*line);
-    scene->normalized = ft_atoi(); // Vector
-    skip_spaces(*line);
+    insert_data_vector(line, scene->center);
+    insert_data_vector(line, scene->normalized);
     scene->diameter = ft_atoi();
     skip_spaces(*line);
     scene->height = ft_atoi();
-    skip_spaces(*line);
-    scene->rgb = ft_atoi();
+    insert_data_vector(line, scene->rgb);
 }

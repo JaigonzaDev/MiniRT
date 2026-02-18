@@ -8,7 +8,7 @@ struct typedef s_sphere
     char *id;
     t_vector center;
     int diameter;
-    int *rgb;
+    t_vector *rgb;
 } t_sphere;
 
 struct typedef s_plane
@@ -16,7 +16,7 @@ struct typedef s_plane
     char *id;
     t_vector point;
     t_vector normalized;
-    int *rgb;
+    t_vector *rgb;
 } t_plane;
 
 struct typedef s_cylinder
@@ -26,5 +26,5 @@ struct typedef s_cylinder
     t_vector normalized;
     int diameter;
     int height;
-    int *rgb;
+    t_vector *rgb;
 } t_cylinder;

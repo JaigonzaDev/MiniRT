@@ -6,7 +6,7 @@ void parse_ambient(char *line, t_ambient *scene)
     skip_spaces(*line);
     scene->light_ratio = ft_atoi();
     skip_spaces(*line);
-    scene->rgb = ft_atoi();
+    insert_data_vector(line, scene->rgb);
 }
 
 void parse_camera(char *line, t_camera *scene)
@@ -15,9 +15,9 @@ void parse_camera(char *line, t_camera *scene)
         printf("Error: Already Assigned");
     scene->id = 'C';
     skip_spaces(*line);
-    scene->viewpoint = ft_atoi();
+    insert_data_vector(line, scene->viewpoint);
     skip_spaces(*line);
-    scene->orientation = ft_atoi();
+    insert_data_vector(line, scene->orientation);
     skip_spaces(*line);
     scene->fov = ft_atoi();
 }
@@ -28,9 +28,9 @@ void parse_light(char *line, t_light *scene)
         printf("Error: Already Assigned");
     scene->id = 'L';
     skip_spaces(*line);
-    scene->light_point = ft_atoi();
+    insert_data_vector(line, scene->light_point);
     skip_spaces(*line);
     scene->brightness = ft_atoi();
     skip_spaces(*line);
-    scene->rgb = ft_atoi();
+    insert_data_vector(line, scene->rgb);
 }

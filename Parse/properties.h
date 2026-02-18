@@ -7,7 +7,7 @@ struct typedef s_ambient
 {
     char *id;
     int light_ratio;
-    int *rgb;
+    t_vector *rgb;
 } t_ambient;
 
 struct typedef s_camera
@@ -23,5 +23,5 @@ struct typedef s_light
     char *id;
     t_vector light_point;
     int *brightness;
-    int *rgb;
+    t_vector *rgb;
 } t_light;
