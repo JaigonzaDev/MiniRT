@@ -2,13 +2,12 @@
 NAME		= miniRT
 
 # Directories
-SRC_DIR		= source
+SRC_DIR		= .
 BUILD_DIR	= build
 BIN_DIR		= bin
-INCLUDE_DIR	= include
-LIB_DIR		= libs/libft
+INCLUDE_DIR	= .
 
-# Source files organized by modules
+# Source files
 SOURCES		= main.c \
 graph/mlx_init.c \
 objects/cylinder.c \
@@ -25,54 +24,30 @@ render/ray.c \
 render/render.c \
 vector/vector_basic_operations.c \
 vector/vector_calculation_operations.c \
+lib/Get_next_line/src/Obligatory/get_next_line.c \
+lib/Get_next_line/src/Obligatory/get_next_line_utils.c
 
 # Object files
 OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 
-# Libraries
-LIBFT		= $(LIB_DIR)/libft.a
-
 # Compiler and flags
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
-INCLUDES	= -I$(INCLUDE_DIR) -I$(LIB_DIR)/include
+INCLUDES	= -I$(INCLUDE_DIR) -Ilib/Get_next_line/include
 RM			= rm -rf
-
-# System detection for readline
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-	# macOS
-	READLINE_PATH = $(shell brew --prefix readline 2>/dev/null || echo "/opt/homebrew")
-	INCLUDES += -I$(READLINE_PATH)/include
-	LDFLAGS = -L$(READLINE_PATH)/lib -L$(LIB_DIR)
-else
-	# Linux
-	LDFLAGS = -L$(LIB_DIR)
-endif
-
-LIBS		= $(LDFLAGS) -lft -lreadline -lncurses -lm
-
-# ================================== RULES =================================== #
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJECTS)
+$(NAME): $(OBJECTS)
 	@echo "Linking $(NAME)..."
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(LIBS) -o $(BIN_DIR)/$(NAME)
+	@$(CC) $(CFLAGS) $(OBJECTS) -o $(BIN_DIR)/$(NAME)
 	@echo "$(NAME) built successfully!"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@echo "Compiling $<..."
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(LIBFT):
-	@echo "Building libft..."
-	@$(MAKE) -C $(LIB_DIR)
-
-libft:
-	@$(MAKE) -C $(LIB_DIR)
 
 clean:
 	@echo "Cleaning object files..."
@@ -81,8 +56,7 @@ clean:
 fclean: clean
 	@echo "Cleaning all generated files..."
 	@$(RM) $(BIN_DIR)
-	@$(MAKE) -C $(LIB_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re libft show
+.PHONY: all clean fclean re libft

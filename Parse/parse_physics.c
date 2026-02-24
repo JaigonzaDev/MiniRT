@@ -1,38 +1,47 @@
+#include "main.h"
 
-void parse_sphere(char *line, t_sphere *scene)
+void parse_sphere(char **line, t_sphere *scene)
 {
-    if (scene != NULL)
-        printf("Error: Already Assigned");
+    if (scene->id != NULL)
+        printf("Error: Already Assigned\n");
     scene->id = "sp";
-    skip_spaces(*line);
-    insert_data_vector(line, scene->center);
-    skip_spaces(*line);
-    scene->diameter = ft_atoi();
-    skip_spaces(*line);
-    scene->height = ft_atoi();
-    insert_data_vector(line, scene->rgb);
+    (*line) += 2;
+    skip_space(line);
+    insert_data_vector(line, &scene->center);
+    skip_space(line);
+    scene->diameter = get_double(line);
+    skip_space(line);
+    insert_data_vector(line, &scene->rgb);
 }
 
-void parse_plane(char *line, t_plane *scene)
+void parse_plane(char **line, t_plane *scene)
 {
-    if (scene != NULL)
-        printf("Error: Already Assigned");
-    scene->id = 'pl';
-    insert_data_vector(line, scene->point);
-    insert_data_vector(line, scene->normalized);
-    insert_data_vector(line, scene->rgb);
+    if (scene->id != NULL)
+        printf("Error: Already Assigned\n");
+    scene->id = "pl";
+    (*line) += 2;
+    skip_space(line);
+    insert_data_vector(line, &scene->point);
+    skip_space(line);
+    insert_data_vector(line, &scene->normalized);
+    skip_space(line);
+    insert_data_vector(line, &scene->rgb);
 }
 
-void parse_cylinder(char *line, t_cylinder *scene)
+void parse_cylinder(char **line, t_cylinder *scene)
 {
-    if (scene != NULL)
-        printf("Error: Already Assigned");
-    scene->id = 'cy';
-    skip_spaces(*line);
-    insert_data_vector(line, scene->center);
-    insert_data_vector(line, scene->normalized);
-    scene->diameter = ft_atoi();
-    skip_spaces(*line);
-    scene->height = ft_atoi();
-    insert_data_vector(line, scene->rgb);
+    if (scene->id != NULL)
+        printf("Error: Already Assigned\n");
+    scene->id = "cy";
+    (*line) += 2;
+    skip_space(line);
+    insert_data_vector(line, &scene->center);
+    skip_space(line);
+    insert_data_vector(line, &scene->normalized);
+    skip_space(line);
+    scene->diameter = get_double(line);
+    skip_space(line);
+    scene->height = get_double(line);
+    skip_space(line);
+    insert_data_vector(line, &scene->rgb);
 }

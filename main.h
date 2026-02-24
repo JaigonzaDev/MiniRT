@@ -1,11 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "Graph/graph.h"
-#include "Vector/vector.h"
-#include "Objects/objects.h"
-#include "Parse/properties.h"
-#include "render/render.h"
+#include "graph/graph.h"
+#include "vector/vector.h"
+#include "objects/objects.h"
+#include "parse/properties.h"
 
 typedef struct s_scene
 {
@@ -19,5 +18,7 @@ typedef struct s_scene
     t_sphere sphere;
     t_plane plane;
 } t_scene;
+
+#include "render/render.h"
 
 #endif

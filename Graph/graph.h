@@ -1,6 +1,7 @@
 #ifndef GRAPH_H
 # define GRAPH_H
 
+#include <stdio.h>
 typedef struct s_graph
 {
     void *mlx;
@@ -9,3 +10,4 @@ typedef struct s_graph
     char *address;
 } t_graph;
 
+#endif

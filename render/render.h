@@ -1,15 +1,18 @@
 #ifndef RENDER_H
 # define RENDER_H
 
-# include "../main.h"
-# include "../Vector/vector.h"
-# include "../Objects/objects.h"
-# include "../Parse/properties.h"
-# include "../Graph/graph.h"
+# include "../vector/vector.h"
+# include "../objects/objects.h"
+# include "../parse/properties.h"
+# include "../graph/graph.h"
 # include <math.h>
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdlib.h>
+
+struct s_scene;
+typedef struct s_scene t_scene;
+
 
 // Macros
 # define PI 3.1415926535
