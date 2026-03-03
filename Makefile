@@ -1,29 +1,38 @@
 # Project
 NAME		= miniRT
 
+# Detect operating system
+UNAME_S		:= $(shell uname -s)
+
 # Directories
 SRC_DIR		= .
 BUILD_DIR	= build
 BIN_DIR		= bin
 INCLUDE_DIR	= .
+MLX_DIR		= mlx
 
 # Source files
 SOURCES		= main.c \
-graph/mlx_init.c \
-objects/cylinder.c \
-objects/plane.c \
-objects/sphere.c \
-parse/parse_objects.c \
-parse/physics.c \
-parse/properties.c \
-parse/parse_utils.c \
+Graph/mlx_init.c \
+Objects/cylinder.c \
+Objects/plane.c \
+Objects/sphere.c \
+Parse/parse_objects.c \
+Parse/parse_physics.c \
+Parse/parse_properties.c \
+Parse/parse_utils.c \
 render/color.c \
 render/light.c \
 render/pixel.c \
 render/ray.c \
 render/render.c \
-vector/vector_basic_operations.c \
-vector/vector_calculation_operations.c \
+render/save_image.c \
+Vector/vector_basic_operations.c \
+Vector/vector_calculation_operations.c \
+intersection/utils.c \
+intersection/sphere_intersection.c \
+intersection/plane_intersection.c \
+intersection/cylinder_intersection.c \
 lib/Get_next_line/src/Obligatory/get_next_line.c \
 lib/Get_next_line/src/Obligatory/get_next_line_utils.c
 
@@ -33,16 +42,59 @@ OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 # Compiler and flags
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
-INCLUDES	= -I$(INCLUDE_DIR) -Ilib/Get_next_line/include
+INCLUDES	= -I$(INCLUDE_DIR) -Ilib/Get_next_line/include -I$(MLX_DIR)
 RM			= rm -rf
+
+# OS-specific settings
+ifeq ($(UNAME_S), Linux)
+	LDFLAGS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
+	MLX_FLAGS	= 
+	BREW_PATH	= 
+endif
+ifeq ($(UNAME_S), Darwin)
+	# macOS settings
+	BREW_PATH	= $(shell brew --prefix 2>/dev/null)
+	ifneq ($(BREW_PATH),)
+		INCLUDES	+= -I$(BREW_PATH)/include
+		LDFLAGS		= -L$(MLX_DIR) -lmlx -L$(BREW_PATH)/lib -framework OpenGL -framework AppKit
+	else
+		LDFLAGS		= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+	endif
+	MLX_FLAGS	= 
+endif
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	@echo "Linking $(NAME)..."
+info:
+	@echo "Building for: $(UNAME_S)"
+	@echo "MLX Directory: $(MLX_DIR)"
+	@echo "LDFLAGS: $(LDFLAGS)"
+
+$(MLX_DIR)/libmlx.a:
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo "Error: MLX directory not found!"; \
+		echo ""; \
+		if [ "$(UNAME_S)" = "Linux" ]; then \
+			echo "For Linux, clone MLX:"; \
+			echo "  git clone https://github.com/42Paris/minilibx-linux.git mlx"; \
+			echo "  cd mlx && make"; \
+		elif [ "$(UNAME_S)" = "Darwin" ]; then \
+			echo "For macOS, clone MLX:"; \
+			echo "  git clone https://github.com/42Paris/minilibx-linux.git mlx"; \
+			echo "  cd mlx && make"; \
+			echo ""; \
+			echo "Or install via package manager if available"; \
+		fi; \
+		exit 1; \
+	fi
+	@echo "Building MLX..."
+	@make -C $(MLX_DIR)
+
+$(NAME): $(MLX_DIR)/libmlx.a $(OBJECTS)
+	@echo "Linking $(NAME) for $(UNAME_S)..."
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) $(OBJECTS) -o $(BIN_DIR)/$(NAME)
-	@echo "$(NAME) built successfully!"
+	@$(CC) $(CFLAGS) $(OBJECTS) $(LDFLAGS) -o $(BIN_DIR)/$(NAME)
+	@echo "$(NAME) built successfully for $(UNAME_S)!"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
@@ -59,4 +111,18 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re libft
+help:
+	@echo "MiniRT Makefile - Cross-platform build system"
+	@echo ""
+	@echo "Usage:"
+	@echo "  make           - Build the project"
+	@echo "  make clean     - Remove object files"
+	@echo "  make fclean    - Remove all generated files"
+	@echo "  make re        - Rebuild the project"
+	@echo "  make info      - Show build configuration"
+	@echo "  make help      - Show this help message"
+	@echo ""
+	@echo "Supported platforms: Linux, macOS"
+	@echo "Current platform: $(UNAME_S)"
+
+.PHONY: all clean fclean re info help

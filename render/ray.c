@@ -1,4 +1,5 @@
 #include "render.h"
+#include "../main.h"
 
 /*
 ** Inicializa el viewport (ventana virtual 3D) de la cámara

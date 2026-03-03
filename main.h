@@ -1,10 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "graph/graph.h"
-#include "vector/vector.h"
-#include "objects/objects.h"
-#include "parse/properties.h"
+#include "Graph/graph.h"
+#include "Vector/vector.h"
+#include "Objects/objects.h"
+#include "Parse/properties.h"
 
 typedef struct s_scene
 {

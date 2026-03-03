@@ -1,7 +1,7 @@
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
-#include "../vector/vector.h"
+#include "../Vector/vector.h"
 
 typedef struct s_sphere
 {

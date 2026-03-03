@@ -1,4 +1,5 @@
 #include "render.h"
+#include "../main.h"
 
 /*
 ** Calcula la iluminación total de un punto de intersección
@@ -39,14 +40,15 @@ t_color	ft_ambient_light(t_color color, double ratio)
 bool	ft_is_shadowed(t_scene *scene, t_hit *closest)
 {
 	t_vector	light_dir;
-	t_ray		ray;
-	double		light_distance;
+	// t_ray		ray;
+	// double		light_distance;
 
 	light_dir = vector_sub(scene->light.light_point, closest->point);
-	light_distance = vector_length(light_dir);
-	ray.origin = vector_add(closest->point, VEC_EPSILON);
-	ray.direction = vector_normal(light_dir);
+	// light_distance = vector_length(light_dir);
+	// ray.origin = vector_add(closest->point, VEC_EPSILON);
+	// ray.direction = vector_normal(light_dir);
 	// TODO: Implementar is_obscured - verificar si hay objetos entre el punto y la luz
+	(void)light_dir;
 	return (false);
 }
 

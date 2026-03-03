@@ -16,10 +16,17 @@ int main (int ac, char **av)
         memset(&scene, 0, sizeof(t_scene));
 
         parse(av, &scene);
-        init_mlx(scene.mlx);
+        printf("Parsed successfully\n");
+        init_mlx(&scene.mlx);
+        printf("MLX initialized\n");
         init_camera(scene.camera);
+        printf("Camera initialized\n");
         render(scene);
-        mlx_loop();
+        printf("Rendering complete\n");
+        
+        // Guardar sin mostrar
+        // start_mlx_loop(&scene);
+        return (0);
         return (0);
     }
 }
