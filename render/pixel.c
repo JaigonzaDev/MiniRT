@@ -1,4 +1,5 @@
 #include "render.h"
+#include "../main.h"
 
 /*
 ** Pinta un pixel en la imagen MLX con el color especificado

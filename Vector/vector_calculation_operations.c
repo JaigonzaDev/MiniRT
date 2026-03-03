@@ -5,7 +5,7 @@ double vector_length (t_vector vec)
     return(sqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z)));
 }
 
-double vector_normal (t_vector vec)
+t_vector vector_normal (t_vector vec)
 {
     t_vector result;
     double length;

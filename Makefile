@@ -13,9 +13,10 @@ graph/mlx_init.c \
 objects/cylinder.c \
 objects/plane.c \
 objects/sphere.c \
+objects/utils.c \
 parse/parse_objects.c \
-parse/physics.c \
-parse/properties.c \
+parse/parse_physics.c \
+parse/parse_properties.c \
 parse/parse_utils.c \
 render/color.c \
 render/light.c \
@@ -33,15 +34,17 @@ OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 # Compiler and flags
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
-INCLUDES	= -I$(INCLUDE_DIR) -Ilib/Get_next_line/include
+INCLUDES	= -I$(INCLUDE_DIR) -Ilib/Get_next_line/include -Ilib/mlx
 RM			= rm -rf
+
+MLX_FLAGS	= -Llib/mlx -lmlx -framework OpenGL -framework AppKit
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	@echo "Linking $(NAME)..."
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) $(OBJECTS) -o $(BIN_DIR)/$(NAME)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(MLX_FLAGS) -o $(BIN_DIR)/$(NAME)
 	@echo "$(NAME) built successfully!"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c

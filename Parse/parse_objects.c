@@ -1,41 +1,83 @@
 #include "main.h"
 
-void parse_ambient(char **line, t_ambient *scene)
+void parse_sphere(char **line, t_sphere **list)
 {
-    if (scene->id != NULL)
-        printf("Error: Already Assigned\n");
-    scene->id = "A";
-    (*line)++;
+    t_sphere *new_node = malloc(sizeof(t_sphere));
+    if (!new_node)
+        exit(1);
+    new_node->next = NULL;
+    new_node->id = "sp";
+    (*line) += 2;
     skip_space(line);
-    scene->light_ratio = get_double(line);
+    insert_data_vector(line, &new_node->center);
     skip_space(line);
-    insert_data_vector(line, &scene->rgb);
+    new_node->diameter = get_double(line);
+    skip_space(line);
+    insert_data_vector(line, &new_node->rgb);
+
+    if (*list == NULL)
+        *list = new_node;
+    else
+    {
+        t_sphere *tmp = *list;
+        while (tmp->next)
+            tmp = tmp->next;
+        tmp->next = new_node;
+    }
 }
 
-void parse_camera(char **line, t_camera *scene)
+void parse_plane(char **line, t_plane **list)
 {
-    if (scene->id != NULL)
-        printf("Error: Already Assigned\n");
-    scene->id = "C";
-    (*line)++;
+    t_plane *new_node = malloc(sizeof(t_plane));
+    if (!new_node)
+        exit(1);
+    new_node->next = NULL;
+    new_node->id = "pl";
+    (*line) += 2;
     skip_space(line);
-    insert_data_vector(line, &scene->viewpoint);
+    insert_data_vector(line, &new_node->point);
     skip_space(line);
-    insert_data_vector(line, &scene->orientation);
+    insert_data_vector(line, &new_node->normalized);
     skip_space(line);
-    scene->fov = get_double(line);
+    insert_data_vector(line, &new_node->rgb);
+
+    if (*list == NULL)
+        *list = new_node;
+    else
+    {
+        t_plane *tmp = *list;
+        while (tmp->next)
+            tmp = tmp->next;
+        tmp->next = new_node;
+    }
 }
 
-void parse_light(char **line, t_light *scene)
+void parse_cylinder(char **line, t_cylinder **list)
 {
-    if (scene->id != NULL)
-        printf("Error: Already Assigned\n");
-    scene->id = "L";
-    (*line)++;
+    t_cylinder *new_node = malloc(sizeof(t_cylinder));
+    if (!new_node)
+        exit(1);
+    new_node->next = NULL;
+    new_node->id = "cy";
+    (*line) += 2;
     skip_space(line);
-    insert_data_vector(line, &scene->light_point);
+    insert_data_vector(line, &new_node->center);
     skip_space(line);
-    scene->brightness = get_double(line);
+    insert_data_vector(line, &new_node->normalized);
     skip_space(line);
-    insert_data_vector(line, &scene->rgb);
+    new_node->diameter = get_double(line);
+    skip_space(line);
+    new_node->height = get_double(line);
+    skip_space(line);
+    insert_data_vector(line, &new_node->rgb);
+
+    if (*list == NULL)
+        *list = new_node;
+    else
+    {
+        t_cylinder *tmp = *list;
+        while (tmp->next)
+            tmp = tmp->next;
+        tmp->next = new_node;
+    }
 }

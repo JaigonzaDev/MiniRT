@@ -1,4 +1,5 @@
 #include "render.h"
+#include "../main.h"
 
 /*
 ** Inicializa el viewport (ventana virtual 3D) de la cámara
@@ -56,9 +57,10 @@ t_ray	ft_cast_ray(t_scene *scene, t_vector factors)
 	t_vector	horizontal;
 	t_vector	res;
 
-	vertical = vector_scale(scene->camera.up, factors.y * scene->camera.hview);
-	horizontal = vector_scale(scene->camera.right, 
-		factors.x * scene->camera.wview);
+	vertical = vector_multi(scene->camera.up, 
+		(t_vector){factors.y * scene->camera.hview, factors.y * scene->camera.hview, factors.y * scene->camera.hview});
+	horizontal = vector_multi(scene->camera.right, 
+		(t_vector){factors.x * scene->camera.wview, factors.x * scene->camera.wview, factors.x * scene->camera.wview});
 	res = vector_add(vertical, horizontal);
 	res = vector_add(res, scene->camera.orientation);
 	res = vector_add(res, scene->camera.viewpoint);
@@ -78,5 +80,5 @@ t_ray	ft_cast_ray(t_scene *scene, t_vector factors)
 */
 t_vector	ft_ray_at(t_ray *ray, double t)
 {
-	return (vector_add(ray->origin, vector_scale(ray->direction, t)));
+	return (vector_add(ray->origin, vector_multi(ray->direction, (t_vector){t, t, t})));
 }
