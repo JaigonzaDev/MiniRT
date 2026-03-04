@@ -1,47 +1,41 @@
 #include "main.h"
 
-void parse_sphere(char **line, t_sphere *scene)
+void parse_ambient(char **line, t_ambient *scene)
 {
     if (scene->id != NULL)
         printf("Error: Already Assigned\n");
-    scene->id = "sp";
-    (*line) += 2;
+    scene->id = "A";
+    (*line)++;
     skip_space(line);
-    insert_data_vector(line, &scene->center);
-    skip_space(line);
-    scene->diameter = get_double(line);
+    scene->light_ratio = get_double(line);
     skip_space(line);
     insert_data_vector(line, &scene->rgb);
 }
 
-void parse_plane(char **line, t_plane *scene)
+void parse_camera(char **line, t_camera *scene)
 {
     if (scene->id != NULL)
         printf("Error: Already Assigned\n");
-    scene->id = "pl";
-    (*line) += 2;
+    scene->id = "C";
+    (*line)++;
     skip_space(line);
-    insert_data_vector(line, &scene->point);
+    insert_data_vector(line, &scene->viewpoint);
     skip_space(line);
-    insert_data_vector(line, &scene->normalized);
+    insert_data_vector(line, &scene->orientation);
     skip_space(line);
-    insert_data_vector(line, &scene->rgb);
+    scene->fov = get_double(line);
 }
 
-void parse_cylinder(char **line, t_cylinder *scene)
+void parse_light(char **line, t_light *scene)
 {
     if (scene->id != NULL)
         printf("Error: Already Assigned\n");
-    scene->id = "cy";
-    (*line) += 2;
+    scene->id = "L";
+    (*line)++;
     skip_space(line);
-    insert_data_vector(line, &scene->center);
+    insert_data_vector(line, &scene->light_point);
     skip_space(line);
-    insert_data_vector(line, &scene->normalized);
-    skip_space(line);
-    scene->diameter = get_double(line);
-    skip_space(line);
-    scene->height = get_double(line);
+    scene->brightness = get_double(line);
     skip_space(line);
     insert_data_vector(line, &scene->rgb);
 }

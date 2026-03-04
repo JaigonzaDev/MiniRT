@@ -1,6 +1,5 @@
 #include "render.h"
 #include "../main.h"
-#include "../intersection/intersection.h"
 
 /*
 ** Función wrapper para render
@@ -17,47 +16,58 @@ int	render(t_scene scene)
 ** Busca la intersección más cercana iterando sobre todos los objetos
 ** Retorna: true si hay intersección, false si el rayo no choca con nada
 */
-bool	ft_obj_hit(t_scene *scene, t_ray *ray, t_hit *closest)
+bool	ft_obj_hit(t_scene *scene, t_ray *ray, t_hit *pixel)
 {
-	t_hit	temp_hit;
-	bool	hit_anything;
+	bool		hit_anything = false;
+	t_sphere	*sp = scene->sphere;
+	t_plane		*pl = scene->plane;
+	t_cylinder	*cy = scene->cylinder;
+	t_hit		temp;
+	double		closest_so_far;
 
-	hit_anything = false;
-	temp_hit.t = INFINITY;
-	
-	// Probar intersección con esfera
-	if (scene->sphere.id != NULL)
+	// Obtenemos la distancia inicial desde el pixel de origen (INFINITY general)
+	closest_so_far = pixel->t;
+
+	while (sp)
 	{
-		temp_hit.t = closest->t;
-		if (sphere_intersect(&scene->sphere, ray, &temp_hit) && temp_hit.t < closest->t)
+		// Llamamos a hit enviando temp. Si da true y la t_temp < closest
+		if (hit_sphere(sp, ray, &temp))
 		{
-			*closest = temp_hit;
-			hit_anything = true;
+			if (temp.t < closest_so_far)
+			{
+				hit_anything = true;
+				closest_so_far = temp.t;
+				*pixel = temp;
+			}
 		}
+		sp = sp->next;
 	}
-	
-	// Probar intersección con plano
-	if (scene->plane.id != NULL)
+	while (pl)
 	{
-		temp_hit.t = closest->t;
-		if (plane_intersect(&scene->plane, ray, &temp_hit) && temp_hit.t < closest->t)
+		if (hit_plane(pl, ray, &temp))
 		{
-			*closest = temp_hit;
-			hit_anything = true;
+			if (temp.t < closest_so_far)
+			{
+				hit_anything = true;
+				closest_so_far = temp.t;
+				*pixel = temp;
+			}
 		}
+		pl = pl->next;
 	}
-	
-	// Probar intersección con cilindro
-	if (scene->cylinder.id != NULL)
+	while (cy)
 	{
-		temp_hit.t = closest->t;
-		if (cylinder_intersect(&scene->cylinder, ray, &temp_hit) && temp_hit.t < closest->t)
+		if (hit_cylinder(cy, ray, &temp))
 		{
-			*closest = temp_hit;
-			hit_anything = true;
+			if (temp.t < closest_so_far)
+			{
+				hit_anything = true;
+				closest_so_far = temp.t;
+				*pixel = temp;
+			}
 		}
+		cy = cy->next;
 	}
-	
 	return (hit_anything);
 }
 
@@ -77,7 +87,7 @@ int	ft_render(t_scene *scene)
 	t_vector	coords;
 	t_vector	factors;
 	t_ray		ray;
-	t_hit		closest;
+	t_hit		pixel;
 
 	coords.y = -1;
 	while (++coords.y < HEIGHT)
@@ -85,14 +95,14 @@ int	ft_render(t_scene *scene)
 		coords.x = -1;
 		while (++coords.x < WIDTH)
 		{
-			closest.color = BLACK;
-			closest.shape = NULL;
-			closest.t = INFINITY;
+			pixel.color = BLACK;
+			pixel.shape = NULL;
+			pixel.t = INFINITY;
 			factors = ft_canvas_to_viewport((int)coords.x, (int)coords.y);
 			ray = ft_cast_ray(scene, factors);
-			if (ft_obj_hit(scene, &ray, &closest))
-				ft_illuminate(scene, &closest);
-			ft_put_pixel(scene, closest.color, (int)coords.x, (int)coords.y);
+			if (ft_obj_hit(scene, &ray, &pixel))
+				ft_illuminate(scene, &pixel);
+			ft_put_pixel(scene, pixel.color, (int)coords.x, (int)coords.y);
 		}
 	}
 	mlx_put_image_to_window(scene->mlx.mlx, scene->mlx.mlx_win, 

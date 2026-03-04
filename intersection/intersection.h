@@ -24,11 +24,4 @@ bool		sphere_intersect(t_sphere *sp, t_ray *ray, t_hit *hit_info);
 bool		plane_intersect(t_plane *pl, t_ray *ray, t_hit *hit_info);
 bool		cylinder_intersect(t_cylinder *cy, t_ray *ray, t_hit *hit_info);
 
-// Funciones auxiliares para cilindro
-bool		check_caps(t_cylinder *cy, t_vector cap, t_hit *inter, double t);
-bool		check_walls(t_cylinder *cy, t_hit *inter, double t);
-double		cap_intersection(t_cylinder *cy, t_ray *ray, t_vector cap);
-double		verify_intersections(t_cylinder *cy, t_ray *ray, 
-				t_equation *eq, t_hit *hit_info);
-
 #endif

@@ -71,6 +71,9 @@ typedef struct s_hit
 int			ft_render(t_scene *scene);
 int			render(t_scene scene);
 void		ft_put_pixel(t_scene *scene, t_color color, int x, int y);
+bool		hit_sphere(t_sphere *sphere, t_ray *ray, t_hit *pixel);
+bool		hit_plane(t_plane *plane, t_ray *ray, t_hit *pixel);
+bool		hit_cylinder(t_cylinder *cyl, t_ray *ray, t_hit *pixel);
 
 // Funciones de viewport y rayos
 void		ft_init_viewport(t_scene *scene);

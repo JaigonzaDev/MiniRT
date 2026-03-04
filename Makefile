@@ -7,9 +7,11 @@ UNAME_S		:= $(shell uname -s)
 # Directories
 SRC_DIR		= .
 BUILD_DIR	= build
-BIN_DIR		= bin
+BIN_DIR		= .
 INCLUDE_DIR	= .
-MLX_DIR		= mlx
+MLX_DIR_LINUX	= mlx
+MLX_DIR_MAC	= lib/mlx
+MLX_DIR		= $(MLX_DIR_LINUX)
 
 # Source files
 SOURCES		= main.c \
@@ -42,17 +44,18 @@ OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 # Compiler and flags
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
-INCLUDES	= -I$(INCLUDE_DIR) -Ilib/Get_next_line/include -I$(MLX_DIR)
+INCLUDES	= -I$(INCLUDE_DIR) -Ilib/Get_next_line/include
 RM			= rm -rf
 
 # OS-specific settings
 ifeq ($(UNAME_S), Linux)
+	MLX_DIR		= $(MLX_DIR_LINUX)
+	INCLUDES	+= -I$(MLX_DIR)
 	LDFLAGS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
-	MLX_FLAGS	= 
-	BREW_PATH	= 
 endif
 ifeq ($(UNAME_S), Darwin)
-	# macOS settings
+	MLX_DIR		= $(MLX_DIR_MAC)
+	INCLUDES	+= -I$(MLX_DIR)
 	BREW_PATH	= $(shell brew --prefix 2>/dev/null)
 	ifneq ($(BREW_PATH),)
 		INCLUDES	+= -I$(BREW_PATH)/include
@@ -60,7 +63,6 @@ ifeq ($(UNAME_S), Darwin)
 	else
 		LDFLAGS		= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 	endif
-	MLX_FLAGS	= 
 endif
 
 all: $(NAME)
@@ -93,7 +95,7 @@ $(MLX_DIR)/libmlx.a:
 $(NAME): $(MLX_DIR)/libmlx.a $(OBJECTS)
 	@echo "Linking $(NAME) for $(UNAME_S)..."
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(LDFLAGS) -o $(BIN_DIR)/$(NAME)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(LDFLAGS) -o $(NAME)
 	@echo "$(NAME) built successfully for $(UNAME_S)!"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
@@ -107,7 +109,7 @@ clean:
 
 fclean: clean
 	@echo "Cleaning all generated files..."
-	@$(RM) $(BIN_DIR)
+	@$(RM) $(NAME)
 
 re: fclean all
 

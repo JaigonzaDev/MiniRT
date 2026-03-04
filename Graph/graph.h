@@ -1,6 +1,6 @@
 #ifndef GRAPH_H
 # define GRAPH_H
-
+#include <mlx.h>
 #include <stdio.h>
 #include <stdlib.h>
 

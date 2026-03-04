@@ -6,27 +6,16 @@ int main (int ac, char **av)
 {
     if (ac != 2)
     {
-        printf("Error: Num arguments");
+        printf("Error: Num arguments\n");
         return (1);
     }
-    else
-    {
-        t_scene scene;
+    t_scene scene;
 
-        memset(&scene, 0, sizeof(t_scene));
-
-        parse(av, &scene);
-        printf("Parsed successfully\n");
-        init_mlx(&scene.mlx);
-        printf("MLX initialized\n");
-        init_camera(scene.camera);
-        printf("Camera initialized\n");
-        render(scene);
-        printf("Rendering complete\n");
-        
-        // Guardar sin mostrar
-        // start_mlx_loop(&scene);
-        return (0);
-        return (0);
-    }
+    memset(&scene, 0, sizeof(t_scene));
+    parse(av, &scene);
+    init_mlx(&scene.mlx);
+    ft_init_viewport(&scene);
+    ft_render(&scene);
+    mlx_loop(scene.mlx.mlx);
+    return (0);
 }

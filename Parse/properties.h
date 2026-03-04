@@ -48,9 +48,9 @@ void parse_ambient(char **line, t_ambient *scene);
 void parse_camera(char **line, t_camera *scene);
 void parse_light(char **line, t_light *scene);
 
-void parse_sphere(char **line, t_sphere *scene);
-void parse_plane(char **line, t_plane *scene);
-void parse_cylinder(char **line, t_cylinder *scene);
+void parse_sphere(char **line, t_sphere **list);
+void parse_plane(char **line, t_plane **list);
+void parse_cylinder(char **line, t_cylinder **list);
 
 void parse_properties(char *line, struct s_scene *scene);
 void parse(char **av, struct s_scene *scene);

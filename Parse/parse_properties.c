@@ -4,7 +4,8 @@ void parse_properties(char *line, t_scene *scene)
 {
     char *ptr = line;
     skip_space(&ptr);
-    if (*ptr == '\0' || *ptr == '\n')
+    // Skip empty lines and comment lines starting with '#'
+    if (*ptr == '\0' || *ptr == '\n' || *ptr == '#')
         return;
     if (strncmp(ptr, "A", 1) == 0 && (ptr[1] == ' ' || ptr[1] == '\t'))
         parse_ambient(&ptr, &scene->ambient);
@@ -31,7 +32,12 @@ void parse(char **av, t_scene *scene)
         exit(1);
     
     int len = strlen(av[1]);
-    if (len < 3 || strncmp(av[1] + len - 3, ".rt", 3) != 0)
+    bool valid_ext = false;
+    if (len >= 3 && strncmp(av[1] + len - 3, ".rt", 3) == 0)
+        valid_ext = true;
+    else if (len >= 2 && strncmp(av[1] + len - 2, ".r", 2) == 0)
+        valid_ext = true;
+    if (!valid_ext)
     {
         printf("Error\nInvalid file extension\n");
         exit(1);
