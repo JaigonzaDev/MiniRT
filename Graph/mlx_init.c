@@ -29,17 +29,18 @@ static int clean_and_exit(void *param)
     return (0);
 }
 
-void init_mlx(t_scene *scene)
+static void init_mlx_instance(t_graph *mlx)
 {
-    t_graph *mlx;
-
-    mlx = &scene->mlx;
     mlx->mlx = mlx_init();
     if (!mlx->mlx)
     {
         printf("Error: Mlx init\n");
         exit(1);
     }
+}
+
+static void init_mlx_window(t_graph *mlx)
+{
     mlx->mlx_win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "MiniRT");
     if (!mlx->mlx_win)
     {
@@ -47,6 +48,10 @@ void init_mlx(t_scene *scene)
         printf("Error: Mlx win\n");
         exit(1);
     }
+}
+
+static void init_mlx_image(t_graph *mlx)
+{
     mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
     if (!mlx->img)
     {
@@ -54,7 +59,7 @@ void init_mlx(t_scene *scene)
         printf("Error: Mlx img\n");
         exit(1);
     }
-    mlx->address = mlx_get_data_addr(mlx->img, &mlx->bpp, 
+    mlx->address = mlx_get_data_addr(mlx->img, &mlx->bpp,
         &mlx->line_length, &mlx->endian);
     if (!mlx->address)
     {
@@ -62,6 +67,16 @@ void init_mlx(t_scene *scene)
         printf("Error addr\n");
         exit(1);
     }
+}
+
+void init_mlx(t_scene *scene)
+{
+    t_graph *mlx;
+
+    mlx = &scene->mlx;
+    init_mlx_instance(mlx);
+    init_mlx_window(mlx);
+    init_mlx_image(mlx);
     mlx_key_hook(mlx->mlx_win, mlx_signals, scene);
     mlx_hook(mlx->mlx_win, 17, 0, clean_and_exit, scene);
 }
