@@ -7,26 +7,33 @@
 
 int mlx_signals(int keycode, void *param)
 {
-    (void)param;
+    t_scene *scene;
+
+    scene = (t_scene *)param;
 #ifdef __APPLE__
     if (keycode == 53)
-        exit(0);
 #else
     if (keycode == 65307)
-        exit(0);
 #endif
+    {
+        cleanup_scene(scene);
+        exit(0);
+    }
     return (keycode);
 }
 
 static int clean_and_exit(void *param)
 {
-    (void)param;
+    cleanup_scene((t_scene *)param);
     exit(0);
     return (0);
 }
 
-void init_mlx(t_graph *mlx)
+void init_mlx(t_scene *scene)
 {
+    t_graph *mlx;
+
+    mlx = &scene->mlx;
     mlx->mlx = mlx_init();
     if (!mlx->mlx)
     {
@@ -36,12 +43,14 @@ void init_mlx(t_graph *mlx)
     mlx->mlx_win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, "MiniRT");
     if (!mlx->mlx_win)
     {
+        destroy_mlx(mlx);
         printf("Error: Mlx win\n");
         exit(1);
     }
     mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
     if (!mlx->img)
     {
+        destroy_mlx(mlx);
         printf("Error: Mlx img\n");
         exit(1);
     }
@@ -49,11 +58,12 @@ void init_mlx(t_graph *mlx)
         &mlx->line_length, &mlx->endian);
     if (!mlx->address)
     {
+        destroy_mlx(mlx);
         printf("Error addr\n");
         exit(1);
     }
-    mlx_key_hook(mlx->mlx_win, mlx_signals, mlx);
-    mlx_hook(mlx->mlx_win, 17, 0, clean_and_exit, mlx);
+    mlx_key_hook(mlx->mlx_win, mlx_signals, scene);
+    mlx_hook(mlx->mlx_win, 17, 0, clean_and_exit, scene);
 }
 
 void start_mlx_loop(t_scene *scene)

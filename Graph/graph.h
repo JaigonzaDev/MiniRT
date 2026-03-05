@@ -18,7 +18,8 @@ typedef struct s_graph
     int endian;
 } t_graph;
 
-void init_mlx(t_graph *mlx);
+void init_mlx(t_scene *scene);
 void start_mlx_loop(t_scene *scene);
+void destroy_mlx(t_graph *mlx);
 
 #endif

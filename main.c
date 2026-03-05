@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int main (int ac, char **av)
 {
@@ -13,9 +14,17 @@ int main (int ac, char **av)
 
     memset(&scene, 0, sizeof(t_scene));
     parse(av, &scene);
-    init_mlx(&scene.mlx);
+    init_mlx(&scene);
     ft_init_viewport(&scene);
     ft_render(&scene);
+
+    if (getenv("ONE_SHOT"))
+    {
+        cleanup_scene(&scene);
+        return (0);
+    }
+
     mlx_loop(scene.mlx.mlx);
+    cleanup_scene(&scene);
     return (0);
 }

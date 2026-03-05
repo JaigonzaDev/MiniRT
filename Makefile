@@ -10,11 +10,13 @@ BUILD_DIR	= build
 BIN_DIR		= .
 INCLUDE_DIR	= .
 MLX_DIR_LINUX	= mlx
-MLX_DIR_MAC	= lib/mlx
+# Prefer local macOS port if present, otherwise fallback to legacy path
+MLX_DIR_MAC	= $(if $(wildcard mlx_macos/Makefile),mlx_macos,lib/mlx)
 MLX_DIR		= $(MLX_DIR_LINUX)
 
 # Source files
 SOURCES		= main.c \
+	cleanup.c \
 Graph/mlx_init.c \
 Objects/cylinder.c \
 Objects/plane.c \
@@ -46,26 +48,31 @@ CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
 INCLUDES	= -I$(INCLUDE_DIR) -Ilib/Get_next_line/include
 RM			= rm -rf
+SAN_FLAGS	= -fsanitize=address,undefined -fno-omit-frame-pointer
 
 # OS-specific settings
 ifeq ($(UNAME_S), Linux)
-	MLX_DIR		= $(MLX_DIR_LINUX)
-	INCLUDES	+= -I$(MLX_DIR)
-	LDFLAGS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
+	MLX_DIR     = $(MLX_DIR_LINUX)
+	INCLUDES    += -I$(MLX_DIR)
+	LDFLAGS     = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
 endif
 ifeq ($(UNAME_S), Darwin)
-	MLX_DIR		= $(MLX_DIR_MAC)
-	INCLUDES	+= -I$(MLX_DIR)
-	BREW_PATH	= $(shell brew --prefix 2>/dev/null)
+	MLX_DIR     = $(MLX_DIR_MAC)
+	INCLUDES    += -I$(MLX_DIR)
+	BREW_PATH   = $(shell brew --prefix 2>/dev/null)
 	ifneq ($(BREW_PATH),)
-		INCLUDES	+= -I$(BREW_PATH)/include
-		LDFLAGS		= -L$(MLX_DIR) -lmlx -L$(BREW_PATH)/lib -framework OpenGL -framework AppKit
+		INCLUDES    += -I$(BREW_PATH)/include
+		LDFLAGS     = -L$(MLX_DIR) -lmlx -L$(BREW_PATH)/lib -framework OpenGL -framework AppKit
 	else
-		LDFLAGS		= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+		LDFLAGS     = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 	endif
 endif
 
 all: $(NAME)
+
+sani: CFLAGS += $(SAN_FLAGS)
+sani: LDFLAGS += $(SAN_FLAGS)
+sani: re
 
 info:
 	@echo "Building for: $(UNAME_S)"

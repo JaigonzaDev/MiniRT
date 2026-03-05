@@ -21,4 +21,7 @@ typedef struct s_scene
 
 #include "render/render.h"
 
+void    cleanup_scene(t_scene *scene);
+void    destroy_mlx(t_graph *mlx);
+
 #endif
