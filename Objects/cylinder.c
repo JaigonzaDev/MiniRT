@@ -1,4 +1,4 @@
-#include "../render/render.h"
+#include "../intersection/intersection.h"
 
 static bool check_caps(t_cylinder *cy, t_vector cap, t_hit *inter, double t)
 {
@@ -79,42 +79,62 @@ static double verify_intersections(t_cylinder *cy, t_ray *ray, t_equation *eq, t
 	return (temp.t);
 }
 
+static void set_cylinder_caps(t_cylinder *cyl, t_vector *cap_base, 
+			 t_vector *cap_top)
+{
+	t_vector	 half;
+
+	half = vector_multi(cyl->normalized, (t_vector){cyl->height / 2.0, 
+		cyl->height / 2.0, cyl->height / 2.0});
+	*cap_base = vector_sub(cyl->center, half);
+	*cap_top = vector_add(cyl->center, half);
+}
+
+static void setup_cylinder_equation(t_cylinder *cyl, t_ray *ray,
+			 t_vector cap_base, t_equation *eq)
+{
+	t_vector	 cy_to_ray;
+
+	eq->t1 = -1;
+	eq->t2 = -1;
+	cy_to_ray = vector_sub(ray->origin, cap_base);
+	eq->a = vector_dotproduct(ray->direction, ray->direction) - \
+		pow(vector_dotproduct(ray->direction, cyl->normalized), 2);
+	eq->b = 2 * (vector_dotproduct(ray->direction, cy_to_ray) - \
+		(vector_dotproduct(ray->direction, cyl->normalized) * 
+		vector_dotproduct(cy_to_ray, cyl->normalized)));
+	eq->c = vector_dotproduct(cy_to_ray, cy_to_ray) - \
+		pow(vector_dotproduct(cy_to_ray, cyl->normalized), 2) - \
+		pow(cyl->diameter / 2.0, 2);
+	solve(eq);
+}
+
+static void apply_cylinder_hit(t_cylinder *cyl, t_ray *ray, t_hit *pixel, 
+			 double t)
+{
+	pixel->t = t;
+	pixel->color.r = (int)cyl->rgb.x;
+	pixel->color.g = (int)cyl->rgb.y;
+	pixel->color.b = (int)cyl->rgb.z;
+	pixel->shape = cyl;
+	pixel->point = ft_ray_at(ray, pixel->t);
+	pixel->normal = cyl->normalized;
+}
+
 bool hit_cylinder(t_cylinder *cyl, t_ray *ray, t_hit *pixel)
 {
 	double		t;
-	t_vector	cy_to_ray;
+
 	t_equation	eq;
 	t_vector	cap_base;
 	t_vector	cap_top;
 
-	// Calculate base and top caps from center and height.
-	// Assuming center is the middle of the cylinder.
-	cap_base = vector_sub(cyl->center, vector_multi(cyl->normalized, (t_vector){cyl->height / 2.0, cyl->height / 2.0, cyl->height / 2.0}));
-	cap_top = vector_add(cyl->center, vector_multi(cyl->normalized, (t_vector){cyl->height / 2.0, cyl->height / 2.0, cyl->height / 2.0}));
-
-	eq.t1 = -1;
-	eq.t2 = -1;
-	cy_to_ray = vector_sub(ray->origin, cap_base);
-	eq.a = vector_dotproduct(ray->direction, ray->direction) - \
-		pow(vector_dotproduct(ray->direction, cyl->normalized), 2);
-	eq.b = 2 * (vector_dotproduct(ray->direction, cy_to_ray) - \
-		(vector_dotproduct(ray->direction, cyl->normalized) * vector_dotproduct(cy_to_ray, cyl->normalized)));
-	eq.c = vector_dotproduct(cy_to_ray, cy_to_ray) - pow(vector_dotproduct(cy_to_ray, cyl->normalized), 2) - \
-		pow(cyl->diameter / 2.0, 2);
-	solve(&eq);
+	set_cylinder_caps(cyl, &cap_base, &cap_top);
+	setup_cylinder_equation(cyl, ray, cap_base, &eq);
 	t = verify_intersections(cyl, ray, &eq, pixel, cap_base, cap_top);
 	if (t > EPSILON)
 	{
-		pixel->t = t;
-		pixel->color.r = (int)cyl->rgb.x;
-		pixel->color.g = (int)cyl->rgb.y;
-		pixel->color.b = (int)cyl->rgb.z;
-		pixel->shape = cyl;
-		pixel->point = ft_ray_at(ray, pixel->t);
-		// Normal calculation for cylinder is complex to fit exactly here without tracking which face it hit (cap vs wall)
-		// but since the user provided this snippet, we ensure basic compilation and structure.
-		// A full normal calculation can be added later as a refinement.
-		pixel->normal = cyl->normalized; // Placeholder normal
+		apply_cylinder_hit(cyl, ray, pixel, t);
 		return (true);
 	}
 	return (false);

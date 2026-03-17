@@ -1,14 +1,15 @@
 #ifndef RENDER_H
 # define RENDER_H
 
-# include "../vector/vector.h"
-# include "../objects/objects.h"
-# include "../parse/properties.h"
-# include "../graph/graph.h"
+# include "../Vector/vector.h"
+# include "../Objects/objects.h"
+# include "../Parse/properties.h"
+# include "../Graph/graph.h"
 # include <math.h>
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdlib.h>
+# include <mlx.h>
 
 struct s_scene;
 typedef struct s_scene t_scene;
@@ -68,6 +69,7 @@ typedef struct s_hit
 
 // Funciones de render
 int			ft_render(t_scene *scene);
+int			render(t_scene scene);
 void		ft_put_pixel(t_scene *scene, t_color color, int x, int y);
 bool		hit_sphere(t_sphere *sphere, t_ray *ray, t_hit *pixel);
 bool		hit_plane(t_plane *plane, t_ray *ray, t_hit *pixel);
@@ -90,5 +92,8 @@ void		ft_illuminate(t_scene *scene, t_hit *closest);
 t_color		ft_ambient_light(t_color color, double ratio);
 t_color		ft_diffuse_light(t_light *light, t_hit *inter, double intensity);
 bool		ft_is_shadowed(t_scene *scene, t_hit *closest);
+
+// Función para guardar imagen
+void		ft_save_image(t_scene *scene, char *filename);
 
 #endif

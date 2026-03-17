@@ -39,3 +39,19 @@ void parse_light(char **line, t_light *scene)
     skip_space(line);
     insert_data_vector(line, &scene->rgb);
 }
+
+/*
+** Inicializa la cámara
+** Esta función puede usarse para validar o configurar la cámara después del parsing
+** Por ahora solo es un placeholder que verifica que la cámara existe
+*/
+void init_camera(t_camera camera)
+{
+    if (camera.id == NULL)
+    {
+        printf("Error: Camera not initialized\n");
+        exit(1);
+    }
+    // Aquí se podría agregar más validación de la cámara si es necesario
+    (void)camera;
+}

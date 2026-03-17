@@ -7,8 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "get_next_line.h"
-#include "../vector/vector.h"
-#include "../objects/objects.h"
+#include "../Vector/vector.h"
+#include "../Objects/objects.h"
 
 typedef struct s_ambient
 {
@@ -54,5 +54,7 @@ void parse_cylinder(char **line, t_cylinder **list);
 
 void parse_properties(char *line, struct s_scene *scene);
 void parse(char **av, struct s_scene *scene);
+
+void init_camera(t_camera camera);
 
 #endif

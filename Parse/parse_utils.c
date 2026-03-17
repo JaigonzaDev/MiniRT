@@ -6,12 +6,32 @@ void skip_space(char **line)
         (*line)++;
 }
 
+static double read_fraction(char **line)
+{
+    double result;
+    double fraction;
+
+    result = 0.0;
+    fraction = 1.0;
+    if (**line != '.')
+        return (0.0);
+    (*line)++;
+    while (**line >= '0' && **line <= '9')
+    {
+        fraction /= 10.0;
+        result += (**line - '0') * fraction;
+        (*line)++;
+    }
+    return (result);
+}
+
 double get_double(char **line)
 {
-    double result = 0.0;
-    double sign = 1.0;
-    double fraction = 1.0;
+    double result;
+    double sign;
 
+    result = 0.0;
+    sign = 1.0;
     skip_space(line);
     if (**line == '-')
     {
@@ -25,16 +45,7 @@ double get_double(char **line)
         result = result * 10.0 + (**line - '0');
         (*line)++;
     }
-    if (**line == '.')
-    {
-        (*line)++;
-        while (**line >= '0' && **line <= '9')
-        {
-            fraction /= 10.0;
-            result += (**line - '0') * fraction;
-            (*line)++;
-        }
-    }
+    result += read_fraction(line);
     return (result * sign);
 }
 

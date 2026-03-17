@@ -15,6 +15,7 @@ t_vector	vector_add(t_vector vec1, t_vector vec2);
 t_vector	vector_sub(t_vector vec1, t_vector vec2);
 t_vector	vector_multi(t_vector vec1, t_vector vec2);
 t_vector	vector_div(t_vector vec1, t_vector vec2);
+t_vector	vector_scale(t_vector vec, double scalar);
 
 // --- Vector calculation operations ---
 double		vector_length(t_vector vec);

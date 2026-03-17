@@ -1,4 +1,4 @@
-#include "../render/render.h"
+#include "../intersection/intersection.h"
 
 bool hit_sphere(t_sphere *sphere, t_ray *ray, t_hit *pixel)
 {
