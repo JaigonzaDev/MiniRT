@@ -17,6 +17,9 @@ typedef struct s_scene
     t_cylinder *cylinder;
     t_sphere *sphere;
     t_plane *plane;
+
+    int active_type;
+    void *active_obj;
 } t_scene;
 
 #include "render/render.h"
