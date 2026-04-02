@@ -1,0 +1,11 @@
+./Graph/graph.h
+./Vector/vector.h
+./Camera/camera.h
+./Objects/objects.h
+./lib/Get_next_line/include/get_next_line.h
+./lib/Get_next_line/include/get_next_line_bonus.h
+./lib/mlx/mlx.h
+./main.h
+./intersection/intersection.h
+./Parse/properties.h
+./render/render.h

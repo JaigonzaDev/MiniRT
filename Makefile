@@ -5,14 +5,14 @@ NAME		= miniRT
 UNAME_S		:= $(shell uname -s)
 
 # Directories
-SRC_DIR		= .
+SRC_DIR		= srcs
 BUILD_DIR	= build
 BIN_DIR		= .
-INCLUDE_DIR	= .
-MLX_DIR_LINUX	= mlx
+INCLUDE_DIR	= include
+MLX_DIR_LINUX	= libs/mlx_linux
 # Prefer local macOS port if present, otherwise fallback to legacy path
-MLX_DIR_MAC	= $(if $(wildcard mlx_macos/Makefile),mlx_macos,lib/mlx)
-MLX_DIR		= $(MLX_DIR_LINUX)
+MLX_DIR_MAC	= $(if $(wildcard mlx_macos/Makefile),mlx_macos,libs/mlx_mac)
+MLX_DIR		= libs/mlx
 
 # Source files
 SOURCES		= main.c \
@@ -37,8 +37,8 @@ intersection/utils.c \
 intersection/sphere_intersection.c \
 intersection/plane_intersection.c \
 intersection/cylinder_intersection.c \
-lib/Get_next_line/src/Obligatory/get_next_line.c \
-lib/Get_next_line/src/Obligatory/get_next_line_utils.c
+../libs/Get_next_line/src/Obligatory/get_next_line.c \
+../libs/Get_next_line/src/Obligatory/get_next_line_utils.c
 
 # Object files
 OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
@@ -46,7 +46,7 @@ OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 # Compiler and flags
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
-INCLUDES	= -I$(INCLUDE_DIR) -Ilib/Get_next_line/include
+INCLUDES	= -I$(INCLUDE_DIR) -Ilibs/Get_next_line/include
 RM			= rm -rf
 SAN_FLAGS	= -fsanitize=address,undefined -fno-omit-frame-pointer
 
