@@ -1,59 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/02 12:00:00 by jaigonza          #+#    #+#             */
+/*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "properties.h"
 
-void skip_space(char **line)
+void	skip_space(char **line)
 {
-    while (**line == ' ' || **line == '\t' || **line == '\n' || **line == '\v' || **line == '\f' || **line == '\r')
-        (*line)++;
+	while (**line == ' ' || **line == '\t' || **line == '\n' \
+		|| **line == '\v' || **line == '\f' || **line == '\r')
+		(*line)++;
 }
 
-static double read_fraction(char **line)
+static double	read_fraction(char **line)
 {
-    double result;
-    double fraction;
+	double	result;
+	double	fraction;
 
-    result = 0.0;
-    fraction = 1.0;
-    if (**line != '.')
-        return (0.0);
-    (*line)++;
-    while (**line >= '0' && **line <= '9')
-    {
-        fraction /= 10.0;
-        result += (**line - '0') * fraction;
-        (*line)++;
-    }
-    return (result);
+	result = 0.0;
+	fraction = 1.0;
+	if (**line != '.')
+		return (0.0);
+	(*line)++;
+	while (**line >= '0' && **line <= '9')
+	{
+		fraction /= 10.0;
+		result += (**line - '0') * fraction;
+		(*line)++;
+	}
+	return (result);
 }
 
-double get_double(char **line)
+double	get_double(char **line)
 {
-    double result;
-    double sign;
+	double	result;
+	double	sign;
 
-    result = 0.0;
-    sign = 1.0;
-    skip_space(line);
-    if (**line == '-')
-    {
-        sign = -1.0;
-        (*line)++;
-    }
-    else if (**line == '+')
-        (*line)++;
-    while (**line >= '0' && **line <= '9')
-    {
-        result = result * 10.0 + (**line - '0');
-        (*line)++;
-    }
-    result += read_fraction(line);
-    return (result * sign);
+	result = 0.0;
+	sign = 1.0;
+	skip_space(line);
+	if (**line == '-')
+	{
+		sign = -1.0;
+		(*line)++;
+	}
+	else if (**line == '+')
+		(*line)++;
+	while (**line >= '0' && **line <= '9')
+	{
+		result = result * 10.0 + (**line - '0');
+		(*line)++;
+	}
+	result += read_fraction(line);
+	return (result * sign);
 }
 
-void insert_data_vector(char **line, t_vector *vector)
+void	insert_data_vector(char **line, t_vector *vector)
 {
-    vector->x = get_double(line);
-    if (**line == ',') (*line)++;
-    vector->y = get_double(line);
-    if (**line == ',') (*line)++;
-    vector->z = get_double(line);
+	vector->x = get_double(line);
+	if (**line == ',')
+		(*line)++;
+	vector->y = get_double(line);
+	if (**line == ',')
+		(*line)++;
+	vector->z = get_double(line);
 }

@@ -1,9 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/02 12:00:00 by jaigonza          #+#    #+#             */
+/*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "render.h"
 
-/*
-** Limita un valor entero entre un mínimo y un máximo
-** Utilizado para asegurar que los valores RGB estén en el rango [0, 255]
-*/
 int	ft_clamp(int value, int min, int max)
 {
 	if (value < min)
@@ -13,11 +20,6 @@ int	ft_clamp(int value, int min, int max)
 	return (value);
 }
 
-/*
-** Crea una estructura de color RGB
-** Aplica clamp automáticamente a cada componente para evitar overflow
-** Retorna: estructura t_color con valores RGB válidos [0-255]
-*/
 t_color	ft_color_create(int r, int g, int b)
 {
 	t_color	color;
@@ -29,11 +31,6 @@ t_color	ft_color_create(int r, int g, int b)
 	return (color);
 }
 
-/*
-** Suma dos colores componente por componente (R+R, G+G, B+B)
-** Aplica clamp para evitar que la suma supere 255
-** Usado para combinar iluminación ambiental y difusa
-*/
 t_color	ft_color_add(t_color c1, t_color c2)
 {
 	t_color	color;
@@ -45,11 +42,6 @@ t_color	ft_color_add(t_color c1, t_color c2)
 	return (color);
 }
 
-/*
-** Multiplica un color por un escalar (factor de intensidad)
-** k: factor multiplicador (0.0 = negro, 1.0 = color original, >1.0 = más brillante)
-** Usado para aplicar ratios de iluminación (ambiental, difusa, atenuación)
-*/
 t_color	ft_color_mult(t_color color, double k)
 {
 	t_color	result;

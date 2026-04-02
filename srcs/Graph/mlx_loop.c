@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.h                                      :+:      :+:    :+:   */
+/*   mlx_loop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,29 +9,21 @@
 /*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef VECTOR_H
-# define VECTOR_H
+#include "graph.h"
+#include "main.h"
+#include "render.h"
+#include <mlx.h>
+#include <stdlib.h>
 
-# include <math.h>
-
-typedef struct s_vector
+int	mlx_close(void *param)
 {
-	double	x;
-	double	y;
-	double	z;
-}			t_vector;
+	cleanup_scene((t_scene *)param);
+	exit(0);
+	return (0);
+}
 
-// --- Vector basic operations ---
-t_vector	vector_add(t_vector vec1, t_vector vec2);
-t_vector	vector_sub(t_vector vec1, t_vector vec2);
-t_vector	vector_multi(t_vector vec1, t_vector vec2);
-t_vector	vector_div(t_vector vec1, t_vector vec2);
-t_vector	vector_scale(t_vector vec, double scalar);
-
-// --- Vector calculation operations ---
-double		vector_length(t_vector vec);
-t_vector	vector_normal(t_vector vec);
-double		vector_dotproduct(t_vector vec1, t_vector vec2);
-t_vector	vector_crossproduct(t_vector vec1, t_vector vec2);
-
-#endif
+void	start_mlx_loop(t_scene *scene)
+{
+	mlx_hook(scene->mlx.mlx_win, 2, 1L<<0, mlx_signals, scene);
+	mlx_loop(scene->mlx.mlx);
+}

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   intersection.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/02 12:00:00 by jaigonza          #+#    #+#             */
+/*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef INTERSECTION_H
 # define INTERSECTION_H
 
@@ -19,9 +30,15 @@ typedef struct s_equation
 int			solve(t_equation *eq);
 t_plane		plane_from_numbers(t_vector center, t_vector normal, t_color color);
 
+double		verify_intersections(t_cylinder *cy, t_ray *r, \
+			t_equation *eq, t_hit *hit_info);
+bool		check_caps(t_cylinder *cy, t_vector cap, t_hit *in, double t);
+bool		check_walls(t_cylinder *cy, t_hit *in, double t);
+double		cap_intersection(t_cylinder *cy, t_ray *ray, t_vector cap);
+
 // Funciones de intersección
 bool		sphere_intersect(t_sphere *sp, t_ray *ray, t_hit *hit_info);
 bool		plane_intersect(t_plane *pl, t_ray *ray, t_hit *hit_info);
-bool		cylinder_intersect(t_cylinder *cy, t_ray *ray, t_hit *hit_info);
+bool		hit_cylinder(t_cylinder *cyl, t_ray *ray, t_hit *pixel);
 
 #endif

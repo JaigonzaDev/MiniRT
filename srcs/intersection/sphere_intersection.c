@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_intersection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iremoztimur <iremoztimur@student.42.fr>    +#+  +:+       +#+        */
+/*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 16:25:52 by iremoztimur       #+#    #+#             */
-/*   Updated: 2024/02/12 16:25:58 by iremoztimur      ###   ########.fr       */
+/*   Created: 2026/04/02 12:00:00 by jaigonza          #+#    #+#             */
+/*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "intersection.h"
 #include "main.h"
 
@@ -22,16 +21,19 @@ bool	sphere_intersect(t_sphere *sp, t_ray *ray, t_hit *hit_info)
 	sphere_to_ray = vector_sub(ray->origin, sp->center);
 	eq.a = vector_dotproduct(ray->direction, ray->direction);
 	eq.b = 2.0f * vector_dotproduct(sphere_to_ray, ray->direction);
-	eq.c = vector_dotproduct(sphere_to_ray, sphere_to_ray) - pow(sp->diameter / 2.0, 2);
+	eq.c = vector_dotproduct(sphere_to_ray, sphere_to_ray) - \
+		pow(sp->diameter / 2.0, 2);
 	if (solve(&eq) > 0 && (eq.t1 > EPSILON || eq.t2 > EPSILON))
 	{
 		if (eq.t1 > EPSILON)
 			hit_info->t = eq.t1;
 		else
 			hit_info->t = eq.t2;
-		hit_info->color = ft_color_create((int)sp->rgb.x, (int)sp->rgb.y, (int)sp->rgb.z);
+		hit_info->color = ft_color_create((int)sp->rgb.x, \
+			(int)sp->rgb.y, (int)sp->rgb.z);
 		hit_info->point = ft_ray_at(ray, hit_info->t);
-		hit_info->normal = vector_normal(vector_sub(hit_info->point, sp->center));
+		hit_info->normal = vector_normal(vector_sub(hit_info->point, \
+			sp->center));
 		return (true);
 	}
 	return (false);

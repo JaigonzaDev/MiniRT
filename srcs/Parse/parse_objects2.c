@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.h                                      :+:      :+:    :+:   */
+/*   parse_objects2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,29 +9,43 @@
 /*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef VECTOR_H
-# define VECTOR_H
+#include "main.h"
 
-# include <math.h>
-
-typedef struct s_vector
+static t_plane	*create_plane_node(char **line)
 {
-	double	x;
-	double	y;
-	double	z;
-}			t_vector;
+	t_plane	*new_node;
 
-// --- Vector basic operations ---
-t_vector	vector_add(t_vector vec1, t_vector vec2);
-t_vector	vector_sub(t_vector vec1, t_vector vec2);
-t_vector	vector_multi(t_vector vec1, t_vector vec2);
-t_vector	vector_div(t_vector vec1, t_vector vec2);
-t_vector	vector_scale(t_vector vec, double scalar);
+	new_node = malloc(sizeof(t_plane));
+	if (!new_node)
+		exit(1);
+	new_node->next = NULL;
+	new_node->id = "pl";
+	(*line) += 2;
+	skip_space(line);
+	insert_data_vector(line, &new_node->point);
+	skip_space(line);
+	insert_data_vector(line, &new_node->normalized);
+	skip_space(line);
+	insert_data_vector(line, &new_node->rgb);
+	return (new_node);
+}
 
-// --- Vector calculation operations ---
-double		vector_length(t_vector vec);
-t_vector	vector_normal(t_vector vec);
-double		vector_dotproduct(t_vector vec1, t_vector vec2);
-t_vector	vector_crossproduct(t_vector vec1, t_vector vec2);
+static void	append_plane(t_plane **list, t_plane *new_node)
+{
+	t_plane	*tmp;
 
-#endif
+	if (*list == NULL)
+	{
+		*list = new_node;
+		return ;
+	}
+	tmp = *list;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new_node;
+}
+
+void	parse_plane(char **line, t_plane **list)
+{
+	append_plane(list, create_plane_node(line));
+}

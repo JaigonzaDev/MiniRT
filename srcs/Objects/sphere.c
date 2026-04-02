@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/02 12:00:00 by jaigonza          #+#    #+#             */
+/*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "intersection.h"
 
-bool hit_sphere(t_sphere *sphere, t_ray *ray, t_hit *pixel)
+bool	hit_sphere(t_sphere *sphere, t_ray *ray, t_hit *pixel)
 {
-	t_vector sphere_to_ray;
+	t_vector	sphere_to_ray;
 	t_equation	eq;
 
 	eq.t1 = -1.0f;
 	sphere_to_ray = vector_sub(ray->origin, sphere->center);
 	eq.a = vector_dotproduct(ray->direction, ray->direction);
 	eq.b = 2.0f * vector_dotproduct(sphere_to_ray, ray->direction);
-	eq.c = vector_dotproduct(sphere_to_ray, sphere_to_ray) - pow(sphere->diameter / 2.0, 2);
+	eq.c = vector_dotproduct(sphere_to_ray, sphere_to_ray) - \
+		pow(sphere->diameter / 2.0, 2);
 	if (solve(&eq) > 0 && (eq.t1 > EPSILON || eq.t2 > EPSILON))
 	{
 		if (eq.t1 > EPSILON)
@@ -21,7 +33,8 @@ bool hit_sphere(t_sphere *sphere, t_ray *ray, t_hit *pixel)
 		pixel->color.b = (int)sphere->rgb.z;
 		pixel->shape = sphere;
 		pixel->point = ft_ray_at(ray, pixel->t);
-		pixel->normal = vector_normal(vector_sub(pixel->point, sphere->center));
+		pixel->normal = vector_normal(vector_sub(pixel->point, \
+			sphere->center));
 		return (true);
 	}
 	return (false);

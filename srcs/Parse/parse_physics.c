@@ -1,57 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_physics.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/02 12:00:00 by jaigonza          #+#    #+#             */
+/*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "main.h"
 
-void parse_ambient(char **line, t_ambient *scene)
+void	parse_ambient(char **line, t_ambient *scene)
 {
-    if (scene->id != NULL)
-        printf("Error: Already Assigned\n");
-    scene->id = "A";
-    (*line)++;
-    skip_space(line);
-    scene->light_ratio = get_double(line);
-    skip_space(line);
-    insert_data_vector(line, &scene->rgb);
+	if (scene->id != NULL)
+		printf("Error: Already Assigned\n");
+	scene->id = "A";
+	(*line)++;
+	skip_space(line);
+	scene->light_ratio = get_double(line);
+	skip_space(line);
+	insert_data_vector(line, &scene->rgb);
 }
 
-void parse_camera(char **line, t_camera *scene)
+void	parse_camera(char **line, t_camera *scene)
 {
-    if (scene->id != NULL)
-        printf("Error: Already Assigned\n");
-    scene->id = "C";
-    (*line)++;
-    skip_space(line);
-    insert_data_vector(line, &scene->viewpoint);
-    skip_space(line);
-    insert_data_vector(line, &scene->orientation);
-    skip_space(line);
-    scene->fov = get_double(line);
+	if (scene->id != NULL)
+		printf("Error: Already Assigned\n");
+	scene->id = "C";
+	(*line)++;
+	skip_space(line);
+	insert_data_vector(line, &scene->viewpoint);
+	skip_space(line);
+	insert_data_vector(line, &scene->orientation);
+	skip_space(line);
+	scene->fov = get_double(line);
 }
 
-void parse_light(char **line, t_light *scene)
+void	parse_light(char **line, t_light *scene)
 {
-    if (scene->id != NULL)
-        printf("Error: Already Assigned\n");
-    scene->id = "L";
-    (*line)++;
-    skip_space(line);
-    insert_data_vector(line, &scene->light_point);
-    skip_space(line);
-    scene->brightness = get_double(line);
-    skip_space(line);
-    insert_data_vector(line, &scene->rgb);
+	if (scene->id != NULL)
+		printf("Error: Already Assigned\n");
+	scene->id = "L";
+	(*line)++;
+	skip_space(line);
+	insert_data_vector(line, &scene->light_point);
+	skip_space(line);
+	scene->brightness = get_double(line);
+	skip_space(line);
+	insert_data_vector(line, &scene->rgb);
 }
 
-/*
-** Inicializa la cámara
-** Esta función puede usarse para validar o configurar la cámara después del parsing
-** Por ahora solo es un placeholder que verifica que la cámara existe
-*/
-void init_camera(t_camera camera)
+void	init_camera(t_camera camera)
 {
-    if (camera.id == NULL)
-    {
-        printf("Error: Camera not initialized\n");
-        exit(1);
-    }
-    // Aquí se podría agregar más validación de la cámara si es necesario
-    (void)camera;
+	if (camera.id == NULL)
+	{
+		printf("Error: Camera not initialized\n");
+		exit(1);
+	}
+	(void)camera;
 }

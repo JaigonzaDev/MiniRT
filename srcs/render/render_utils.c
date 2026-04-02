@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objects.h                                     :+:      :+:    :+:   */
+/*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,38 +9,38 @@
 /*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef OBJECTS_H
-#define OBJECTS_H
+#include "render.h"
+#include "main.h"
 
-#include "vector.h"
-
-typedef struct s_sphere
+static void	render_pixel(t_scene *scene, int x, int y)
 {
-	char        *id;
-	t_vector    center;
-	double      diameter;
-	t_vector    rgb;
-	struct s_sphere *next;
-}   t_sphere;
+	t_vector	factors;
+	t_ray		ray;
+	t_hit		pixel;
 
-typedef struct s_plane
+	pixel.color = BLACK;
+	pixel.shape = NULL;
+	pixel.t = INFINITY;
+	factors = ft_canvas_to_viewport(x, y);
+	ray = ft_cast_ray(scene, factors);
+	if (ft_obj_hit(scene, &ray, &pixel))
+		ft_illuminate(scene, &pixel);
+	ft_put_pixel(scene, pixel.color, x, y);
+}
+
+int	ft_render(t_scene *scene)
 {
-	char        *id;
-	t_vector    point;
-	t_vector    normalized;
-	t_vector    rgb;
-	struct s_plane *next;
-}   t_plane;
+	t_vector	coords;
 
-typedef struct s_cylinder
-{
-	char            *id;
-	t_vector        center;
-	t_vector        normalized;
-	double          diameter;
-	double          height;
-	t_vector        rgb;
-	struct s_cylinder *next;
-}   t_cylinder;
-
-#endif
+	coords.y = -1;
+	while (++coords.y < HEIGHT)
+	{
+		coords.x = -1;
+		while (++coords.x < WIDTH)
+			render_pixel(scene, (int)coords.x, (int)coords.y);
+	}
+	mlx_put_image_to_window(scene->mlx.mlx, scene->mlx.mlx_win, \
+		scene->mlx.img, 0, 0);
+	ft_save_image(scene, "output_new.ppm");
+	return (0);
+}

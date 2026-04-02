@@ -18,10 +18,14 @@ MLX_DIR		= libs/mlx
 SOURCES		= main.c \
 	cleanup.c \
 Graph/mlx_init.c \
+Graph/mlx_loop.c \
 Objects/cylinder.c \
 Objects/plane.c \
 Objects/sphere.c \
 Parse/parse_objects.c \
+Parse/parse_objects2.c \
+Parse/parse_objects3.c \
+Parse/parse_file.c \
 Parse/parse_physics.c \
 Parse/parse_properties.c \
 Parse/parse_utils.c \
@@ -30,6 +34,7 @@ render/light.c \
 render/pixel.c \
 render/ray.c \
 render/render.c \
+render/render_utils.c \
 render/save_image.c \
 Vector/vector_basic_operations.c \
 Vector/vector_calculation_operations.c \
@@ -37,6 +42,7 @@ intersection/utils.c \
 intersection/sphere_intersection.c \
 intersection/plane_intersection.c \
 intersection/cylinder_intersection.c \
+intersection/cylinder_intersection_utils.c \
 ../libs/Get_next_line/src/Obligatory/get_next_line.c \
 ../libs/Get_next_line/src/Obligatory/get_next_line_utils.c
 

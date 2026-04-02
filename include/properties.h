@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   properties.h                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/02 12:00:00 by jaigonza          #+#    #+#             */
+/*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef PROPERTIES_H
 #define PROPERTIES_H
 
@@ -12,30 +23,30 @@
 
 typedef struct s_ambient
 {
-    char *id;
-    double light_ratio;
-    t_vector rgb;
+	char *id;
+	double light_ratio;
+	t_vector rgb;
 } t_ambient;
 
 typedef struct s_camera
 {
-    char *id;
-    t_vector viewpoint;
-    t_vector orientation;
-    double fov;
-    // Campos adicionales para viewport
-    t_vector up;
-    t_vector right;
-    double wview;
-    double hview;
+	char *id;
+	t_vector viewpoint;
+	t_vector orientation;
+	double fov;
+	// Campos adicionales para viewport
+	t_vector up;
+	t_vector right;
+	double wview;
+	double hview;
 } t_camera;
 
 typedef struct s_light
 {
-    char *id;
-    t_vector light_point;
-    double brightness;
-    t_vector rgb;
+	char *id;
+	t_vector light_point;
+	double brightness;
+	t_vector rgb;
 } t_light;
 
 struct s_scene;

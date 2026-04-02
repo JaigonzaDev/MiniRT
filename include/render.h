@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaigonza <jaigonza@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/02 12:00:00 by jaigonza          #+#    #+#             */
+/*   Updated: 2026/04/02 12:00:00 by jaigonza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef RENDER_H
 # define RENDER_H
 
@@ -12,10 +23,8 @@
 # include <mlx.h>
 
 struct s_scene;
-typedef struct s_scene t_scene;
+typedef struct s_scene	t_scene;
 
-
-// Macros
 # define PI 3.1415926535
 # define RADIANS(deg) ((deg * PI) / 180.0)
 # define EPSILON 0.0001
@@ -28,14 +37,12 @@ typedef struct s_scene t_scene;
 #  define WIDTH 1920
 # endif
 
-# define RATIO 	(16.0/9.0)
+# define RATIO (16.0/9.0)
 # define HEIGHT (WIDTH/RATIO)
 
-// Fixed vectors
 # define UPGUIDE (t_vector){0.0, 1.0, 0.0}
 # define VEC_EPSILON (t_vector){EPSILON, EPSILON, EPSILON}
 
-// Estructura de Color
 typedef struct s_color
 {
 	int	t;
@@ -44,18 +51,15 @@ typedef struct s_color
 	int	b;
 }	t_color;
 
-// Fixed colors
 # define WHITE (t_color){0, 255, 255, 255}
 # define BLACK (t_color){0, 0, 0, 0}
 
-// Estructura de Rayo
 typedef struct s_ray
 {
 	t_vector	origin;
 	t_vector	direction;
 }	t_ray;
 
-// Estructura de intersección (hit)
 typedef struct s_hit
 {
 	void		*shape;
@@ -71,6 +75,7 @@ typedef struct s_hit
 int			ft_render(t_scene *scene);
 int			render(t_scene scene);
 void		ft_put_pixel(t_scene *scene, t_color color, int x, int y);
+bool		ft_obj_hit(t_scene *scene, t_ray *ray, t_hit *pixel);
 bool		hit_sphere(t_sphere *sphere, t_ray *ray, t_hit *pixel);
 bool		hit_plane(t_plane *plane, t_ray *ray, t_hit *pixel);
 bool		hit_cylinder(t_cylinder *cyl, t_ray *ray, t_hit *pixel);
