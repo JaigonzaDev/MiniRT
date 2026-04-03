@@ -84,21 +84,9 @@ info:
 	@echo "LDFLAGS: $(LDFLAGS)"
 
 $(MLX_DIR)/libmlx.a:
-	@if [ ! -d "$(MLX_DIR)" ]; then \
-		echo "Error: MLX directory not found!"; \
-		echo ""; \
-		if [ "$(UNAME_S)" = "Linux" ]; then \
-			echo "For Linux, clone MLX:"; \
-			echo "  git clone https://github.com/42Paris/minilibx-linux.git mlx"; \
-			echo "  cd mlx && make"; \
-		elif [ "$(UNAME_S)" = "Darwin" ]; then \
-			echo "For macOS, clone MLX:"; \
-			echo "  git clone https://github.com/42Paris/minilibx-linux.git mlx"; \
-			echo "  cd mlx && make"; \
-			echo ""; \
-			echo "Or install via package manager if available"; \
-		fi; \
-		exit 1; \
+	@if [ -z "$(ls -A $(MLX_DIR))" ]; then \
+		echo "MLX directory is empty, cloning repository..."; \
+		git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
 	fi
 	@echo "Building MLX..."
 	@make -C $(MLX_DIR)
