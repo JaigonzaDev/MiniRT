@@ -16,6 +16,7 @@ static t_sphere	*create_sphere_node(char **line)
 	new_node->diameter = get_double(line);
 	skip_space(line);
 	insert_data_vector(line, &new_node->rgb);
+	validate_line_end(line);
 	return (new_node);
 }
 

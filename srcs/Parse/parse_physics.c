@@ -3,19 +3,26 @@
 void	parse_ambient(char **line, t_ambient *scene)
 {
 	if (scene->id != NULL)
-		printf("Error: Already Assigned\n");
+	{
+		printf("Error\nAmbient lighting declared more than once\n");
+		exit(1);
+	}
 	scene->id = "A";
 	(*line)++;
 	skip_space(line);
 	scene->light_ratio = get_double(line);
 	skip_space(line);
 	insert_data_vector(line, &scene->rgb);
+	validate_line_end(line);
 }
 
 void	parse_camera(char **line, t_camera *scene)
 {
 	if (scene->id != NULL)
-		printf("Error: Already Assigned\n");
+	{
+		printf("Error\nCamera declared more than once\n");
+		exit(1);
+	}
 	scene->id = "C";
 	(*line)++;
 	skip_space(line);
@@ -24,12 +31,16 @@ void	parse_camera(char **line, t_camera *scene)
 	insert_data_vector(line, &scene->orientation);
 	skip_space(line);
 	scene->fov = get_double(line);
+	validate_line_end(line);
 }
 
 void	parse_light(char **line, t_light *scene)
 {
 	if (scene->id != NULL)
-		printf("Error: Already Assigned\n");
+	{
+		printf("Error\nLight declared more than once\n");
+		exit(1);
+	}
 	scene->id = "L";
 	(*line)++;
 	skip_space(line);
@@ -38,14 +49,5 @@ void	parse_light(char **line, t_light *scene)
 	scene->brightness = get_double(line);
 	skip_space(line);
 	insert_data_vector(line, &scene->rgb);
-}
-
-void	init_camera(t_camera camera)
-{
-	if (camera.id == NULL)
-	{
-		printf("Error: Camera not initialized\n");
-		exit(1);
-	}
-	(void)camera;
+	validate_line_end(line);
 }

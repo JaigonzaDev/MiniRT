@@ -16,6 +16,7 @@ static t_plane	*create_plane_node(char **line)
 	insert_data_vector(line, &new_node->normalized);
 	skip_space(line);
 	insert_data_vector(line, &new_node->rgb);
+	validate_line_end(line);
 	return (new_node);
 }
 

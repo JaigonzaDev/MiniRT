@@ -17,12 +17,6 @@ static void	render_pixel(t_scene *scene, int x, int y)
 	ft_put_pixel(scene, pixel.color, x, y);
 }
 
-int	render(t_scene scene)
-{
-	ft_init_viewport(&scene);
-	return (ft_render(&scene));
-}
-
 int	ft_render(t_scene *scene)
 {
 	t_vector	coords;
@@ -36,6 +30,5 @@ int	ft_render(t_scene *scene)
 	}
 	mlx_put_image_to_window(scene->mlx.mlx, scene->mlx.mlx_win,
 		scene->mlx.img, 0, 0);
-	ft_save_image(scene, "output_new.ppm");
 	return (0);
 }

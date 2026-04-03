@@ -20,6 +20,7 @@ static t_cylinder	*create_cylinder_node(char **line)
 	new_node->height = get_double(line);
 	skip_space(line);
 	insert_data_vector(line, &new_node->rgb);
+	validate_line_end(line);
 	return (new_node);
 }
 

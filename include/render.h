@@ -55,7 +55,6 @@ typedef struct s_hit
 
 // Funciones de render
 int			ft_render(struct s_scene *scene);
-int			render(struct s_scene scene);
 void		ft_put_pixel(struct s_scene *scene, t_color color, int x, int y);
 bool		ft_obj_hit(struct s_scene *scene, t_ray *ray, t_hit *pixel);
 bool		hit_sphere(t_sphere *sphere, t_ray *ray, t_hit *pixel);
@@ -79,8 +78,5 @@ void		ft_illuminate(struct s_scene *scene, t_hit *closest);
 t_color		ft_ambient_light(t_color color, double ratio);
 t_color		ft_diffuse_light(t_light *light, t_hit *inter, double intensity);
 bool		ft_is_shadowed(struct s_scene *scene, t_hit *closest);
-
-// Función para guardar imagen
-void		ft_save_image(struct s_scene *scene, char *filename);
 
 #endif

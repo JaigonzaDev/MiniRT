@@ -26,7 +26,6 @@ bool		check_walls(t_cylinder *cy, t_hit *in, double t);
 double		cap_intersection(t_cylinder *cy, t_ray *ray, t_vector cap);
 
 // Funciones de intersección
-bool		sphere_intersect(t_sphere *sp, t_ray *ray, t_hit *hit_info);
 bool		plane_intersect(t_plane *pl, t_ray *ray, t_hit *hit_info);
 bool		hit_cylinder(t_cylinder *cyl, t_ray *ray, t_hit *pixel);
 

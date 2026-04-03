@@ -42,6 +42,8 @@ struct	s_scene;
 void	skip_space(char **line);
 double	get_double(char **line);
 void	insert_data_vector(char **line, t_vector *vector);
+void	parse_error(char *message);
+void	validate_line_end(char **line);
 
 void	parse_ambient(char **line, t_ambient *scene);
 void	parse_camera(char **line, t_camera *scene);
@@ -53,7 +55,5 @@ void	parse_cylinder(char **line, t_cylinder **list);
 
 void	parse_properties(char *line, struct s_scene *scene);
 void	parse(char **av, struct s_scene *scene);
-
-void	init_camera(t_camera camera);
 
 #endif

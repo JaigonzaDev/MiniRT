@@ -35,11 +35,9 @@ render/pixel.c \
 render/ray.c \
 render/render.c \
 render/render_utils.c \
-render/save_image.c \
 Vector/vector_basic_operations.c \
 Vector/vector_calculation_operations.c \
 intersection/utils.c \
-intersection/sphere_intersection.c \
 intersection/plane_intersection.c \
 intersection/cylinder_intersection.c \
 intersection/cylinder_intersection_utils.c \
