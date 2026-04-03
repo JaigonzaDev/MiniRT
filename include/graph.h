@@ -4,8 +4,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-struct s_scene;
-typedef struct s_scene	t_scene;
+struct	s_scene;
 
 typedef struct s_graph
 {
@@ -18,8 +17,8 @@ typedef struct s_graph
 	int		endian;
 }	t_graph;
 
-void	init_mlx(t_scene *scene);
-void	start_mlx_loop(t_scene *scene);
+void	init_mlx(struct s_scene *scene);
+void	start_mlx_loop(struct s_scene *scene);
 void	destroy_mlx(t_graph *mlx);
 int		mlx_signals(int keycode, void *param);
 int		mlx_close(void *param);

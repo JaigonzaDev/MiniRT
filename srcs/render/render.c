@@ -1,12 +1,6 @@
 #include "render.h"
 #include "main.h"
 
-int	render(t_scene scene)
-{
-	ft_init_viewport(&scene);
-	return (ft_render(&scene));
-}
-
 static bool	update_hit_if_closer(t_hit *temp, t_hit *pixel, double *closest)
 {
 	if (temp->t < *closest)
@@ -18,7 +12,7 @@ static bool	update_hit_if_closer(t_hit *temp, t_hit *pixel, double *closest)
 	return (false);
 }
 
-static bool	check_spheres(t_sphere *sp, t_ray *ray, t_hit *pixel, \
+static bool	check_spheres(t_sphere *sp, t_ray *ray, t_hit *pixel,
 			double *closest)
 {
 	bool	hit;
@@ -34,7 +28,7 @@ static bool	check_spheres(t_sphere *sp, t_ray *ray, t_hit *pixel, \
 	return (hit);
 }
 
-static bool	check_planes(t_plane *pl, t_ray *ray, t_hit *pixel, \
+static bool	check_planes(t_plane *pl, t_ray *ray, t_hit *pixel,
 			double *closest)
 {
 	bool	hit;
@@ -50,7 +44,7 @@ static bool	check_planes(t_plane *pl, t_ray *ray, t_hit *pixel, \
 	return (hit);
 }
 
-static bool	check_cylinders(t_cylinder *cy, t_ray *ray, t_hit *pixel, \
+static bool	check_cylinders(t_cylinder *cy, t_ray *ray, t_hit *pixel,
 			double *closest)
 {
 	bool	hit;
@@ -75,7 +69,7 @@ bool	ft_obj_hit(t_scene *scene, t_ray *ray, t_hit *pixel)
 	closest_so_far = pixel->t;
 	hit_anything |= check_spheres(scene->sphere, ray, pixel, &closest_so_far);
 	hit_anything |= check_planes(scene->plane, ray, pixel, &closest_so_far);
-	hit_anything |= check_cylinders(scene->cylinder, ray, pixel, \
-		&closest_so_far);
+	hit_anything |= check_cylinders(scene->cylinder, ray, pixel,
+			&closest_so_far);
 	return (hit_anything);
 }

@@ -7,7 +7,7 @@ static void	render_pixel(t_scene *scene, int x, int y)
 	t_ray		ray;
 	t_hit		pixel;
 
-	pixel.color = BLACK;
+	pixel.color = (t_color){0, 0, 0, 0};
 	pixel.shape = NULL;
 	pixel.t = INFINITY;
 	factors = ft_canvas_to_viewport(x, y);
@@ -15,6 +15,12 @@ static void	render_pixel(t_scene *scene, int x, int y)
 	if (ft_obj_hit(scene, &ray, &pixel))
 		ft_illuminate(scene, &pixel);
 	ft_put_pixel(scene, pixel.color, x, y);
+}
+
+int	render(t_scene scene)
+{
+	ft_init_viewport(&scene);
+	return (ft_render(&scene));
 }
 
 int	ft_render(t_scene *scene)
@@ -28,7 +34,7 @@ int	ft_render(t_scene *scene)
 		while (++coords.x < WIDTH)
 			render_pixel(scene, (int)coords.x, (int)coords.y);
 	}
-	mlx_put_image_to_window(scene->mlx.mlx, scene->mlx.mlx_win, \
+	mlx_put_image_to_window(scene->mlx.mlx, scene->mlx.mlx_win,
 		scene->mlx.img, 0, 0);
 	ft_save_image(scene, "output_new.ppm");
 	return (0);

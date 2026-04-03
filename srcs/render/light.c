@@ -7,8 +7,8 @@ void	ft_illuminate(t_scene *scene, t_hit *closest)
 
 	color = ft_ambient_light(closest->color, scene->ambient.light_ratio);
 	if (scene->light.brightness && !ft_is_shadowed(scene, closest))
-		color = ft_color_add(color, ft_diffuse_light(&scene->light, closest, \
-			scene->light.brightness));
+		color = ft_color_add(color, ft_diffuse_light(&scene->light, closest,
+					scene->light.brightness));
 	closest->color = color;
 }
 
@@ -25,7 +25,8 @@ bool	ft_is_shadowed(t_scene *scene, t_hit *closest)
 
 	light_dir = vector_sub(scene->light.light_point, closest->point);
 	light_distance = vector_length(light_dir);
-	ray.origin = vector_add(closest->point, VEC_EPSILON);
+	ray.origin = vector_add(closest->point,
+			(t_vector){EPSILON, EPSILON, EPSILON});
 	ray.direction = vector_normal(light_dir);
 	(void)light_distance;
 	(void)ray;
@@ -42,9 +43,11 @@ t_color	ft_diffuse_light(t_light *light, t_hit *inter, double intensity)
 	double		attenuation;
 
 	light_dir = vector_sub(light->light_point, inter->point);
-	attenuation = MIN(1.0, 90.0 / vector_length(light_dir));
-	cos_angle = vector_dotproduct(vector_normal(inter->normal), \
-		vector_normal(light_dir));
+	attenuation = 90.0 / vector_length(light_dir);
+	if (attenuation > 1.0)
+		attenuation = 1.0;
+	cos_angle = vector_dotproduct(vector_normal(inter->normal),
+			vector_normal(light_dir));
 	if (cos_angle < 0)
 		cos_angle = 0;
 	diffuse_ratio = intensity * cos_angle * attenuation;

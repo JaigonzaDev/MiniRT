@@ -33,8 +33,8 @@ static void	write_pixel_row(t_scene *scene, int fd, int y)
 	x = 0;
 	while (x < WIDTH)
 	{
-		pixel = (unsigned int *)(scene->mlx.address + \
-			(y * scene->mlx.line_length) + (x * (scene->mlx.bpp / 8)));
+		pixel = (unsigned int *)(scene->mlx.address
+				+ (y * scene->mlx.line_length) + (x * (scene->mlx.bpp / 8)));
 		if (pixel)
 		{
 			bytes = (unsigned char *)pixel;

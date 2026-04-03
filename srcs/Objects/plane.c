@@ -14,8 +14,8 @@ static bool	set_plane_hit(t_plane *plane, t_ray *ray, t_hit *pixel, double t)
 	if (denom < 0)
 		pixel->normal = plane->normalized;
 	else
-		pixel->normal = vector_multi(plane->normalized, \
-			(t_vector){-1, -1, -1});
+		pixel->normal = vector_multi(plane->normalized,
+				(t_vector){-1, -1, -1});
 	return (true);
 }
 
@@ -29,8 +29,8 @@ bool	hit_plane(t_plane *plane, t_ray *ray, t_hit *pixel)
 	if (fabs(denominator) > EPSILON)
 	{
 		plane_to_ray = vector_sub(plane->point, ray->origin);
-		equation.t1 = vector_dotproduct(plane_to_ray, \
-			plane->normalized) / denominator;
+		equation.t1 = vector_dotproduct(plane_to_ray,
+				plane->normalized) / denominator;
 		if (equation.t1 > EPSILON)
 			return (set_plane_hit(plane, ray, pixel, equation.t1));
 	}

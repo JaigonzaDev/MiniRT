@@ -2,7 +2,7 @@
 
 void	skip_space(char **line)
 {
-	while (**line == ' ' || **line == '\t' || **line == '\n' \
+	while (**line == ' ' || **line == '\t' || **line == '\n'
 		|| **line == '\v' || **line == '\f' || **line == '\r')
 		(*line)++;
 }

@@ -27,13 +27,13 @@ bool	check_walls(t_cylinder *cy, t_hit *inter, double t)
 
 	point = ft_ray_at(&inter->ray, t);
 	co = vector_sub(inter->ray.origin, cy->center);
-	m = vector_dotproduct(inter->ray.direction, cy->normalized) * t + \
-		vector_dotproduct(co, cy->normalized);
+	m = vector_dotproduct(inter->ray.direction, cy->normalized) * t
+		+ vector_dotproduct(co, cy->normalized);
 	bp = vector_scale(cy->normalized, m);
 	len = vector_length(vector_sub(point, vector_add(cy->center, bp)));
 	m -= EPSILON;
 	len -= EPSILON;
-	if (m >= 0 && m <= cy->height && len <= (cy->diameter / 2.0) \
+	if (m >= 0 && m <= cy->height && len <= (cy->diameter / 2.0)
 		&& t > EPSILON && t < inter->t)
 	{
 		inter->t = t;
@@ -53,15 +53,15 @@ double	cap_intersection(t_cylinder *cy, t_ray *ray, t_vector cap)
 	return (-1);
 }
 
-double	verify_intersections(t_cylinder *cy, t_ray *ray, \
+double	verify_intersections(t_cylinder *cy, t_ray *ray,
 	t_equation *eq, t_hit *hit_info)
 {
 	double		t3;
 	double		t4;
 	t_vector	cap_top;
 
-	cap_top = vector_add(cy->center, \
-		vector_scale(cy->normalized, cy->height));
+	cap_top = vector_add(cy->center,
+			vector_scale(cy->normalized, cy->height));
 	t3 = cap_intersection(cy, ray, cy->center);
 	t4 = cap_intersection(cy, ray, cap_top);
 	hit_info->t = INFINITY;

@@ -5,16 +5,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef __APPLE__
+# define ESC_KEY 53
+#else
+# define ESC_KEY 65307
+#endif
+
 int	mlx_signals(int keycode, void *param)
 {
 	t_scene	*scene;
 
 	scene = (t_scene *)param;
-#ifdef __APPLE__
-	if (keycode == 53)
-#else
-	if (keycode == 65307)
-#endif
+	if (keycode == ESC_KEY)
 	{
 		cleanup_scene(scene);
 		exit(0);
@@ -52,8 +54,8 @@ static void	init_mlx_image(t_graph *mlx)
 		printf("Error: Mlx img\n");
 		exit(1);
 	}
-	mlx->address = mlx_get_data_addr(mlx->img, &mlx->bpp, \
-		&mlx->line_length, &mlx->endian);
+	mlx->address = mlx_get_data_addr(mlx->img, &mlx->bpp,
+			&mlx->line_length, &mlx->endian);
 	if (!mlx->address)
 	{
 		destroy_mlx(mlx);

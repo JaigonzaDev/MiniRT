@@ -1,4 +1,3 @@
-
 #include "intersection.h"
 
 bool	check_caps(t_cylinder *cy, t_vector cap, t_hit *inter, double t)
@@ -30,8 +29,8 @@ bool	check_walls(t_cylinder *cy, t_hit *inter, double t, t_vector cap_b)
 		return (false);
 	point = ft_ray_at(&inter->ray, t);
 	co = vector_sub(inter->ray.origin, cap_b);
-	m = vector_dotproduct(inter->ray.direction, cy->normalized) * t + \
-		vector_dotproduct(co, cy->normalized);
+	m = vector_dotproduct(inter->ray.direction, cy->normalized) * t
+		+ vector_dotproduct(co, cy->normalized);
 	a = vector_add(cap_b, vector_multi(cy->normalized, (t_vector){m, m, m}));
 	len = vector_length(vector_sub(point, a));
 	if (m >= 0 && m <= cy->height && len <= (cy->diameter / 2.0) + EPSILON)
@@ -58,7 +57,7 @@ double	cap_intersection(t_cylinder *cy, t_ray *ray, t_vector cap)
 	return (-1);
 }
 
-double	verify_intersections(t_cylinder *cy, t_ray *ray, \
+double	verify_intersections(t_cylinder *cy, t_ray *ray,
 		t_equation *eq, t_vector *caps)
 {
 	double	t3;

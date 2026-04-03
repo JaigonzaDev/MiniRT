@@ -1,3 +1,4 @@
+#ifndef CAMERA_H
 # define CAMERA_H
 
 # include "vector.h"
@@ -7,19 +8,19 @@
 /*                                  MACROS                                    */
 /* ************************************************************************** */
 
-# define PI 3.1415926535
-# define RADIANS(deg) ((deg * PI) / 180.0)
+# ifndef PI
+#  define PI 3.1415926535
+# endif
 
 # ifdef __APPLE__
 #  define WIDTH 1440
+#  define HEIGHT 810
 # else
 #  define WIDTH 1920
+#  define HEIGHT 1080
 # endif
 
-# define RATIO (16.0/9.0)
-# define HEIGHT (WIDTH/RATIO)
-
-# define UPGUIDE (t_vector){0.0, 1.0, 0.0}
+# define RATIO 1.77777777778
 
 /* ************************************************************************** */
 /*                                 STRUCTURES                                 */

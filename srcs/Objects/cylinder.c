@@ -1,6 +1,6 @@
 #include "intersection.h"
 
-static void	setup_cylinder_equation(t_cylinder *cyl, t_ray *r, \
+static void	setup_cylinder_equation(t_cylinder *cyl, t_ray *r,
 			t_equation *eq)
 {
 	t_vector	cy_to_ray;
@@ -12,16 +12,15 @@ static void	setup_cylinder_equation(t_cylinder *cyl, t_ray *r, \
 	cy_to_ray = vector_sub(r->origin, cyl->center);
 	dot_r_norm = vector_dotproduct(r->direction, cyl->normalized);
 	dot_cy_norm = vector_dotproduct(cy_to_ray, cyl->normalized);
-	eq->a = vector_dotproduct(r->direction, r->direction) - \
-		pow(dot_r_norm, 2);
-	eq->b = 2 * (vector_dotproduct(r->direction, cy_to_ray) - \
-		(dot_r_norm * dot_cy_norm));
-	eq->c = vector_dotproduct(cy_to_ray, cy_to_ray) - \
-		pow(dot_cy_norm, 2) - pow(cyl->diameter / 2.0, 2);
+	eq->a = vector_dotproduct(r->direction, r->direction) - pow(dot_r_norm, 2);
+	eq->b = 2 * (vector_dotproduct(r->direction, cy_to_ray)
+			- (dot_r_norm * dot_cy_norm));
+	eq->c = vector_dotproduct(cy_to_ray, cy_to_ray)
+		- pow(dot_cy_norm, 2) - pow(cyl->diameter / 2.0, 2);
 	solve(eq);
 }
 
-static void	apply_cylinder_hit(t_cylinder *cyl, t_ray *ray, t_hit *pixel, \
+static void	apply_cylinder_hit(t_cylinder *cyl, t_ray *ray, t_hit *pixel,
 			double t)
 {
 	pixel->t = t;

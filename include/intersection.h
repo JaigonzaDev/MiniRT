@@ -19,8 +19,8 @@ typedef struct s_equation
 int			solve(t_equation *eq);
 t_plane		plane_from_numbers(t_vector center, t_vector normal, t_color color);
 
-double		verify_intersections(t_cylinder *cy, t_ray *r, \
-			t_equation *eq, t_hit *hit_info);
+double		verify_intersections(t_cylinder *cy, t_ray *r,
+				t_equation *eq, t_hit *hit_info);
 bool		check_caps(t_cylinder *cy, t_vector cap, t_hit *in, double t);
 bool		check_walls(t_cylinder *cy, t_hit *in, double t);
 double		cap_intersection(t_cylinder *cy, t_ray *ray, t_vector cap);

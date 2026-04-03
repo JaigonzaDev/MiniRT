@@ -1,8 +1,8 @@
 #include "render.h"
 
-double solve(t_equation *eq)
+double	solve(t_equation *eq)
 {
-	double discriminant;
+	double	discriminant;
 
 	discriminant = eq->b * eq->b - 4 * eq->a * eq->c;
 	if (discriminant < 0)
