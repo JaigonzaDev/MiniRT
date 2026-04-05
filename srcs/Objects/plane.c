@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/05 12:13:06 by jaigonza          #+#    #+#             */
+/*   Updated: 2026/04/05 12:14:07 by jaigonza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "intersection.h"
 
 static bool	set_plane_hit(t_plane *plane, t_ray *ray, t_hit *pixel, double t)
