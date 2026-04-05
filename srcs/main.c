@@ -29,11 +29,6 @@ int	main(int ac, char **av)
 	init_mlx(&scene);
 	ft_init_viewport(&scene);
 	ft_render(&scene);
-	if (getenv("ONE_SHOT"))
-	{
-		cleanup_scene(&scene);
-		return (0);
-	}
 	mlx_loop(scene.mlx.mlx);
 	cleanup_scene(&scene);
 	return (0);

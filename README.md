@@ -22,15 +22,14 @@ The project follows the miniRT constraints from the subject file in `docs/en.sub
 - Scene parsing from text files (`.rt`, and currently also `.r` extensions)
 - Multiple spheres, planes, and cylinders
 - Basic light model (ambient + point light)
-- Cross-platform Makefile logic for macOS and Linux
+- Linux Makefile targeting MiniLibX for X11
 - Integrated use of `Get_next_line` and MiniLibX
 
 ## Instructions
 ### Requirements
 - C compiler (`cc`)
 - `make`
-- On Linux: X11 development libraries (Xext, X11), `libm`, `libbsd`
-- On macOS: Xcode Command Line Tools, OpenGL/AppKit frameworks
+- X11 development libraries: `libXext`, `libX11`, `libm`, `libbsd`
 
 ### Build
 From the project root:
@@ -53,16 +52,10 @@ Examples available in `docs/tests/`.
 make clean     # remove MiniRT object files
 make fclean    # remove MiniRT binary and run fclean on libraries when available
 make re        # full rebuild
-make info      # print detected platform/build flags
+make info      # print build flags
 make sani      # rebuild with sanitizers
 ```
 
-### One-shot mode (for non-interactive checks)
-Set `ONE_SHOT=1` to render once and exit without entering the MLX event loop:
-
-```bash
-ONE_SHOT=1 ./miniRT docs/tests/sphere.rt
-```
 
 ## Scene Format Overview
 A scene is made of one element per line. Empty lines and lines starting with `#` are ignored.
@@ -94,7 +87,7 @@ For complete and official constraints, refer to the 42 subject.
 - `srcs/` core source code (parsing, math, intersections, render, mlx loop)
 - `include/` headers
 - `libs/Get_next_line/` line-by-line file reader library
-- `libs/mlx_linux/` and `libs/mlx_mac/` MiniLibX implementations
+- `libs/mlx_linux/` MiniLibX implementation for Linux/X11
 - `docs/tests/` sample scenes
 
 ## Resources
@@ -102,7 +95,7 @@ Classic references:
 - Ray Tracing in One Weekend, Peter Shirley
 - Scratchapixel: Ray Tracing lessons
 - PBRT (Physically Based Rendering) book and website
-- MiniLibX documentation (`libs/mlx_mac/man/man3/` and 42 resources)
+- MiniLibX documentation (42 resources and `libs/mlx_linux/`)
 - 42 miniRT subject (`docs/en.subject.pdf`)
 
 How AI was used in this project:
