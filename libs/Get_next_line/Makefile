@@ -82,6 +82,7 @@ $(BONUS_BUILD_PATH)/%.o: $(SRC_BONUS_PATH)/%.c $(INCLUDE_PATH_FILES_BONUS)
 clean:
 	@$(RM) $(BUILD_PATH)
 	@$(RM) $(CACHE)
+	@$(RM) $(SRC_OBLIGATORY_PATH)/*.o $(SRC_BONUS_PATH)/*.o
 
 fclean: clean
 	@$(RM) $(LIB_PATH)

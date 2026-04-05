@@ -13,6 +13,8 @@ MLX_DIR_LINUX	= libs/mlx_linux
 # Prefer local macOS port if present, otherwise fallback to legacy path
 MLX_DIR_MAC	= $(if $(wildcard mlx_macos/Makefile),mlx_macos,libs/mlx_mac)
 MLX_DIR		= libs/mlx
+GNL_DIR		= libs/Get_next_line
+GNL_LIB		= $(GNL_DIR)/lib/libget_next_line.a
 
 # Source files
 SOURCES		= main.c \
@@ -41,8 +43,7 @@ intersection/utils.c \
 intersection/plane_intersection.c \
 intersection/cylinder_intersection.c \
 intersection/cylinder_intersection_utils.c \
-../libs/Get_next_line/src/Obligatory/get_next_line.c \
-../libs/Get_next_line/src/Obligatory/get_next_line_utils.c
+
 
 # Object files
 OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
@@ -91,10 +92,14 @@ $(MLX_DIR)/libmlx.a:
 	@echo "Building MLX..."
 	@make -C $(MLX_DIR)
 
-$(NAME): $(MLX_DIR)/libmlx.a $(OBJECTS)
+$(GNL_LIB):
+	@echo "Building Get_next_line..."
+	@$(MAKE) -C $(GNL_DIR)
+
+$(NAME): $(MLX_DIR)/libmlx.a $(GNL_LIB) $(OBJECTS)
 	@echo "Linking $(NAME) for $(UNAME_S)..."
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(GNL_LIB) $(LDFLAGS) -o $(NAME)
 	@echo "$(NAME) built successfully for $(UNAME_S)!"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
@@ -105,25 +110,26 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 clean:
 	@echo "Cleaning object files..."
 	@$(RM) $(BUILD_DIR)
+	@if [ -f "$(MLX_DIR)/Makefile" ]; then \
+		echo "Cleaning MLX build files..."; \
+		$(MAKE) --no-print-directory -s -C $(MLX_DIR) clean >/dev/null 2>&1 || true; \
+	fi
+	@if [ -f "$(GNL_DIR)/Makefile" ]; then \
+		echo "Cleaning Get_next_line build files..."; \
+		$(MAKE) --no-print-directory -s -C $(GNL_DIR) clean >/dev/null 2>&1 || true; \
+	fi
 
-fclean: clean
-	@echo "Cleaning all generated files..."
+fclean:
+	@$(RM) $(BUILD_DIR)
 	@$(RM) $(NAME)
+	@if [ -f "$(MLX_DIR)/Makefile" ]; then \
+		$(MAKE) --no-print-directory -s -C $(MLX_DIR) fclean >/dev/null 2>&1 || \
+		$(MAKE) --no-print-directory -s -C $(MLX_DIR) clean >/dev/null 2>&1 || true; \
+	fi
+	@if [ -f "$(GNL_DIR)/Makefile" ]; then \
+		$(MAKE) --no-print-directory -s -C $(GNL_DIR) fclean >/dev/null 2>&1 || true; \
+	fi
 
 re: fclean all
-
-help:
-	@echo "MiniRT Makefile - Cross-platform build system"
-	@echo ""
-	@echo "Usage:"
-	@echo "  make           - Build the project"
-	@echo "  make clean     - Remove object files"
-	@echo "  make fclean    - Remove all generated files"
-	@echo "  make re        - Rebuild the project"
-	@echo "  make info      - Show build configuration"
-	@echo "  make help      - Show this help message"
-	@echo ""
-	@echo "Supported platforms: Linux, macOS"
-	@echo "Current platform: $(UNAME_S)"
 
 .PHONY: all clean fclean re info help
