@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_physics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: rlobun <rlobun@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 12:12:39 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/05 12:14:10 by jaigonza         ###   ########.fr       */
+/*   Created: 2026/04/05 12:12:39 by rlobun            #+#    #+#             */
+/*   Updated: 2026/04/05 17:03:10 by rlobun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

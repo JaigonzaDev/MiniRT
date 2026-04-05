@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: rlobun <rlobun@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 12:12:50 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/05 12:14:09 by jaigonza         ###   ########.fr       */
+/*   Created: 2026/04/05 12:12:50 by rlobun            #+#    #+#             */
+/*   Updated: 2026/04/05 17:03:59 by rlobun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
