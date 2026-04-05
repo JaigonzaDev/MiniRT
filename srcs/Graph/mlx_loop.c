@@ -17,8 +17,6 @@ void	start_mlx_loop(t_scene *scene)
 	mlx_loop(scene->mlx.mlx);
 }
 
-#ifndef __APPLE__
-
 static void	free_linux_mlx(t_graph *mlx)
 {
 	if (mlx->mlx)
@@ -28,15 +26,6 @@ static void	free_linux_mlx(t_graph *mlx)
 		mlx->mlx = NULL;
 	}
 }
-
-#else
-
-static void	free_linux_mlx(t_graph *mlx)
-{
-	(void)mlx;
-}
-
-#endif
 
 void	destroy_mlx(t_graph *mlx)
 {

@@ -5,11 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef __APPLE__
-# define ESC_KEY 53
-#else
 # define ESC_KEY 65307
-#endif
 
 int	mlx_signals(int keycode, void *param)
 {

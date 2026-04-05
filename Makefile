@@ -1,18 +1,12 @@
 # Project
 NAME		= miniRT
 
-# Detect operating system
-UNAME_S		:= $(shell uname -s)
-
 # Directories
 SRC_DIR		= srcs
 BUILD_DIR	= build
 BIN_DIR		= .
 INCLUDE_DIR	= include
-MLX_DIR_LINUX	= libs/mlx_linux
-# Prefer local macOS port if present, otherwise fallback to legacy path
-MLX_DIR_MAC	= $(if $(wildcard mlx_macos/Makefile),mlx_macos,libs/mlx_mac)
-MLX_DIR		= libs/mlx
+MLX_DIR		= libs/mlx_linux
 GNL_DIR		= libs/Get_next_line
 GNL_LIB		= $(GNL_DIR)/lib/libget_next_line.a
 
@@ -51,27 +45,10 @@ OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 # Compiler and flags
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
-INCLUDES	= -I$(INCLUDE_DIR) -Ilibs/Get_next_line/include
+INCLUDES	= -I$(INCLUDE_DIR) -I$(MLX_DIR) -Ilibs/Get_next_line/include
+LDFLAGS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
 RM			= rm -rf
 SAN_FLAGS	= -fsanitize=address,undefined -fno-omit-frame-pointer
-
-# OS-specific settings
-ifeq ($(UNAME_S), Linux)
-	MLX_DIR     = $(MLX_DIR_LINUX)
-	INCLUDES    += -I$(MLX_DIR)
-	LDFLAGS     = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
-endif
-ifeq ($(UNAME_S), Darwin)
-	MLX_DIR     = $(MLX_DIR_MAC)
-	INCLUDES    += -I$(MLX_DIR)
-	BREW_PATH   = $(shell brew --prefix 2>/dev/null)
-	ifneq ($(BREW_PATH),)
-		INCLUDES    += -I$(BREW_PATH)/include
-		LDFLAGS     = -L$(MLX_DIR) -lmlx -L$(BREW_PATH)/lib -framework OpenGL -framework AppKit
-	else
-		LDFLAGS     = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-	endif
-endif
 
 all: $(NAME)
 
@@ -80,7 +57,7 @@ sani: LDFLAGS += $(SAN_FLAGS)
 sani: re
 
 info:
-	@echo "Building for: $(UNAME_S)"
+	@echo "Building for: Linux"
 	@echo "MLX Directory: $(MLX_DIR)"
 	@echo "LDFLAGS: $(LDFLAGS)"
 
@@ -97,10 +74,10 @@ $(GNL_LIB):
 	@$(MAKE) -C $(GNL_DIR)
 
 $(NAME): $(MLX_DIR)/libmlx.a $(GNL_LIB) $(OBJECTS)
-	@echo "Linking $(NAME) for $(UNAME_S)..."
+	@echo "Linking $(NAME)..."
 	@mkdir -p $(BIN_DIR)
 	@$(CC) $(CFLAGS) $(OBJECTS) $(GNL_LIB) $(LDFLAGS) -o $(NAME)
-	@echo "$(NAME) built successfully for $(UNAME_S)!"
+	@echo "$(NAME) built successfully!"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
