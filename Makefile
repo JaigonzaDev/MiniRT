@@ -8,7 +8,9 @@ BIN_DIR		= .
 INCLUDE_DIR	= include
 MLX_DIR		= libs/mlx_linux
 GNL_DIR		= libs/Get_next_line
+LIBFT_DIR	= libs/Libft
 GNL_LIB		= $(GNL_DIR)/lib/libget_next_line.a
+LIBFT_LIB	= $(LIBFT_DIR)/libft.a
 
 # Source files
 SOURCES		= main.c \
@@ -45,8 +47,8 @@ OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 # Compiler and flags
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
-INCLUDES	= -I$(INCLUDE_DIR) -I$(MLX_DIR) -Ilibs/Get_next_line/include
-LDFLAGS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
+INCLUDES	= -I$(INCLUDE_DIR) -I$(MLX_DIR) -I$(GNL_DIR)/include -I$(LIBFT_DIR)/include
+LDFLAGS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd -L$(LIBFT_DIR) -lft
 RM			= rm -rf
 SAN_FLAGS	= -fsanitize=address,undefined -fno-omit-frame-pointer
 
@@ -59,10 +61,14 @@ $(GNL_LIB):
 	@echo "Building Get_next_line..."
 	@$(MAKE) -C $(GNL_DIR)
 
-$(NAME): $(MLX_DIR)/libmlx.a $(GNL_LIB) $(OBJECTS)
+$(LIBFT_LIB):
+	@echo "Building Libft..."
+	@$(MAKE) -C $(LIBFT_DIR)
+
+$(NAME): $(MLX_DIR)/libmlx.a $(GNL_LIB) $(LIBFT_LIB) $(OBJECTS)
 	@echo "Linking $(NAME)..."
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(GNL_LIB) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(GNL_LIB) $(LIBFT_LIB) $(LDFLAGS) -o $(NAME)
 	@echo "$(NAME) built successfully!"
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
@@ -81,6 +87,10 @@ clean:
 		echo "Cleaning Get_next_line build files..."; \
 		$(MAKE) --no-print-directory -s -C $(GNL_DIR) clean >/dev/null 2>&1 || true; \
 	fi
+	@if [ -f "$(LIBFT_DIR)/Makefile" ]; then \
+		echo "Cleaning Libft build files..."; \
+		$(MAKE) --no-print-directory -s -C $(LIBFT_DIR) clean >/dev/null 2>&1 || true; \
+	fi
 
 fclean:
 	@$(RM) $(BUILD_DIR)
@@ -91,6 +101,9 @@ fclean:
 	fi
 	@if [ -f "$(GNL_DIR)/Makefile" ]; then \
 		$(MAKE) --no-print-directory -s -C $(GNL_DIR) fclean >/dev/null 2>&1 || true; \
+	fi
+	@if [ -f "$(LIBFT_DIR)/Makefile" ]; then \
+		$(MAKE) --no-print-directory -s -C $(LIBFT_DIR) fclean >/dev/null 2>&1 || true; \
 	fi
 
 re: fclean all

@@ -6,11 +6,12 @@
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:12:35 by rlobun            #+#    #+#             */
-/*   Updated: 2026/04/06 20:41:46 by jaigonza         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:56:45 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+#include "libft.h"
 
 static bool	is_comment_or_empty(char *ptr)
 {

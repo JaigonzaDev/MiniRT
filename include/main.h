@@ -6,13 +6,14 @@
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:13:47 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/05 12:14:02 by jaigonza         ###   ########.fr       */
+/*   Updated: 2026/04/06 19:01:03 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
 
+# include "libft.h"
 # include "render.h"
 # include "graph.h"
 # include "vector.h"
