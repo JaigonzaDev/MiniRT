@@ -10,7 +10,7 @@ MLX_DIR		= libs/mlx_linux
 GNL_DIR		= libs/Get_next_line
 LIBFT_DIR	= libs/Libft
 GNL_LIB		= $(GNL_DIR)/lib/libget_next_line.a
-LIBFT_LIB	= $(LIBFT_DIR)/libft.a
+LIBFT_LIB	= $(LIBFT_DIR)/lib/Libft/libft.a
 
 # Source files
 SOURCES		= main.c \
@@ -48,7 +48,7 @@ OBJECTS		= $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
 INCLUDES	= -I$(INCLUDE_DIR) -I$(MLX_DIR) -I$(GNL_DIR)/include -I$(LIBFT_DIR)/include
-LDFLAGS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd -L$(LIBFT_DIR) -lft
+LDFLAGS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
 RM			= rm -rf
 SAN_FLAGS	= -fsanitize=address,undefined -fno-omit-frame-pointer
 

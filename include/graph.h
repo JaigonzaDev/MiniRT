@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   graph.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlobun <rlobun@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 17:04:43 by rlobun            #+#    #+#             */
-/*   Updated: 2026/04/05 17:04:44 by rlobun           ###   ########.fr       */
+/*   Updated: 2026/04/06 21:14:33 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GRAPH_H
 # define GRAPH_H
+# include "libft.h"
 # include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>

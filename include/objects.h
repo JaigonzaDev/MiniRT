@@ -6,13 +6,14 @@
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:13:41 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/05 12:14:03 by jaigonza         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:14:33 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJECTS_H
 # define OBJECTS_H
 
+# include "libft.h"
 # include "vector.h"
 
 typedef struct s_sphere
