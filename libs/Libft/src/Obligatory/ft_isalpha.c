@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/02/19 12:52:56 by jaigonza          #+#    #+#             */
+/*   Updated: 2025/07/03 17:08:48 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	Checks for an alphabetic character.
+ */
+
+int	ft_isalpha(int c)
 {
-	t_scene	scene;
-
-	if (ac != 2)
-	{
-		printf("Error: Num arguments\n");
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
 		return (1);
-	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	else
+		return (0);
 }

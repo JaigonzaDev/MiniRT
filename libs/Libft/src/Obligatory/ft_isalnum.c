@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/11 12:22:29 by jaigonza          #+#    #+#             */
+/*   Updated: 2025/07/03 17:06:43 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	Checks for an alphanumeric character.
+ */
+
+int	ft_isalnum(int c)
 {
-	t_scene	scene;
+	unsigned char	d;
 
-	if (ac != 2)
-	{
-		printf("Error: Num arguments\n");
+	d = c;
+	if ((d >= 65 && d <= 90) || (d >= 97 && d <= 122) || (d >= 48 && d <= 57))
 		return (1);
-	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	else
+		return (0);
 }

@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/02/19 16:09:46 by jaigonza          #+#    #+#             */
+/*   Updated: 2024/03/22 12:16:40 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	Compares the first n bytes of s1 and s2.
+ */
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	t_scene	scene;
+	size_t	i;
 
-	if (ac != 2)
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && i < n)
 	{
-		printf("Error: Num arguments\n");
-		return (1);
+		if (s1[i] != s2[i])
+		{
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		}
+		i++;
 	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
+	if (i < n)
+	{
+		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
 	return (0);
 }

@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/15 16:58:02 by jaigonza          #+#    #+#             */
+/*   Updated: 2025/07/03 17:06:17 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	Delete a specific node from a linked list 
+ 	and free the memory occupied by both 
+ *	the node's content and the node itself.
+ */
+
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	t_scene	scene;
-
-	if (ac != 2)
+	if (!del)
+		return ;
+	if (lst)
 	{
-		printf("Error: Num arguments\n");
-		return (1);
+		(*del)(lst->content);
+		free(lst);
 	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
 }

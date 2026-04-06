@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/13 14:45:55 by jaigonza          #+#    #+#             */
+/*   Updated: 2024/03/22 16:03:32 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	Writes a string (s) to a specified file descriptor (fd), 
+ *	followed by a newline character (\n).
+ */
+
+void	ft_putendl_fd(char *s, int fd)
 {
-	t_scene	scene;
-
-	if (ac != 2)
-	{
-		printf("Error: Num arguments\n");
-		return (1);
-	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }

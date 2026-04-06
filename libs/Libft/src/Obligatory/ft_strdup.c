@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/13 16:21:46 by jaigonza          #+#    #+#             */
+/*   Updated: 2025/07/03 17:07:32 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	Returns a pointer to a new string 
+ *	which is a duplicate of the string s.
+ */
+
+char	*ft_strdup(const char *src)
 {
-	t_scene	scene;
+	char	*dup;
+	int		i;
 
-	if (ac != 2)
+	i = 0;
+	while (src[i] != '\0')
+		i++;
+	dup = (char *)malloc(i + 1);
+	if (dup == NULL)
+		return (0);
+	i = 0;
+	while (src[i] != '\0')
 	{
-		printf("Error: Num arguments\n");
-		return (1);
+		dup[i] = src[i];
+		i++;
 	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	dup[i] = '\0';
+	return (dup);
 }

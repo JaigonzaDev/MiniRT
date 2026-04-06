@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/13 10:10:39 by jaigonza          #+#    #+#             */
+/*   Updated: 2025/07/03 17:07:48 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	The malloc() function allocates size bytes and 
+ *	returns a pointer to the allocated memory.
+ */
+
+void	*ft_calloc(size_t count, size_t size)
 {
-	t_scene	scene;
+	void	*p;
 
-	if (ac != 2)
+	p = (void *)malloc(count * size);
+	if (p != NULL)
 	{
-		printf("Error: Num arguments\n");
-		return (1);
+		p = ft_memset(p, 0, count * size);
+		return (p);
 	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	return (NULL);
 }

@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/11 16:22:50 by jaigonza          #+#    #+#             */
+/*   Updated: 2025/07/03 17:11:08 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	Copy the string src to the end of the string dst,
+ *	ensuring that the maximum size (dstsize) is not exceeded.
+ */
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	t_scene	scene;
+	size_t	i;
+	size_t	j;
 
-	if (ac != 2)
+	i = 0;
+	j = 0;
+	while (src[j])
+		j++;
+	if (dstsize < 1)
+		return (j);
+	while (src[i] && i < dstsize - 1)
 	{
-		printf("Error: Num arguments\n");
-		return (1);
+		dst[i] = src[i];
+		i++;
 	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	dst[i] = '\0';
+	return (j);
 }

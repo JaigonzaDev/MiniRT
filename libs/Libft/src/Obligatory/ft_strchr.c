@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/11 17:12:07 by jaigonza          #+#    #+#             */
+/*   Updated: 2024/03/22 12:43:29 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	The strchr() function returns a pointer to the first occurrence 
+ *	of the character c in the string s.
+ */
+
+char	*ft_strchr(const char *s, int c)
 {
-	t_scene	scene;
+	unsigned char	d;
+	int				i;
 
-	if (ac != 2)
+	d = c;
+	i = 0;
+	while ((s[i]) || (i == 0))
 	{
-		printf("Error: Num arguments\n");
-		return (1);
+		if (s[i] == d)
+			return ((char *)&s[i]);
+		i++;
 	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	if (d == '\0')
+		return ((char *)&s[i]);
+	return (NULL);
 }

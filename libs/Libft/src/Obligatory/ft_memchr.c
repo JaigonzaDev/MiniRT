@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/11 18:23:56 by jaigonza          #+#    #+#             */
+/*   Updated: 2024/03/22 16:56:02 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	The memchr() function scans the initial n bytes of the memory area 
+ *	pointed to by s for the first instance of c.
+ */
+
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	t_scene	scene;
+	const unsigned char	*p = NULL;
 
-	if (ac != 2)
+	while (n-- > 0)
 	{
-		printf("Error: Num arguments\n");
-		return (1);
+		if (*(unsigned char *)s == (unsigned char)c)
+		{
+			p = s;
+			break ;
+		}
+		s = (unsigned char *)s + 1;
 	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	return ((void *)p);
 }

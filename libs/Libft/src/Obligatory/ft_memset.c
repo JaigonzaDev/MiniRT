@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/11 12:57:50 by jaigonza          #+#    #+#             */
+/*   Updated: 2024/03/22 10:39:38 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	The memset() function fills the first len bytes of the memory 
+ *	area pointed to by s with c.
+ */
+
+void	*ft_memset(void *b, int c, size_t len)
 {
-	t_scene	scene;
+	unsigned char	*ptr;
+	unsigned char	d;
 
-	if (ac != 2)
-	{
-		printf("Error: Num arguments\n");
-		return (1);
-	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	ptr = b;
+	d = c;
+	while (len-- > 0)
+		*ptr++ = d;
+	return (b);
 }
+
+// int	main(void)
+// {
+// char	array[5];
+//
+// printf("%s", ft_memset(array, 'A', 5));
+// return (0);
+// }

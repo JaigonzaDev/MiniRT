@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/05 10:00:35 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/06 18:34:57 by jaigonza         ###   ########.fr       */
+/*   Created: 2024/03/11 14:30:13 by jaigonza          #+#    #+#             */
+/*   Updated: 2025/07/03 17:09:49 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*
+ *	The bzero() function sets the first 
+ *	n bytes of the area starting at s to zero.
+ */
+
+void	ft_bzero(void *s, size_t n)
 {
-	t_scene	scene;
+	unsigned char	*ptr;
 
-	if (ac != 2)
+	ptr = s;
+	if (n > 0)
 	{
-		printf("Error: Num arguments\n");
-		return (1);
+		while (n-- > 0)
+			*ptr++ = 0;
+		return ;
 	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	parse(av, &scene);
-	init_mlx(&scene);
-	ft_init_viewport(&scene);
-	ft_render(&scene);
-	mlx_loop(scene.mlx.mlx);
-	cleanup_scene(&scene);
-	return (0);
+	else
+	{
+		return ;
+	}
 }
