@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_properties.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlobun <rlobun@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:12:35 by rlobun            #+#    #+#             */
-/*   Updated: 2026/04/05 17:03:42 by rlobun           ###   ########.fr       */
+/*   Updated: 2026/04/06 20:41:46 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ static bool	is_comment_or_empty(char *ptr)
 
 static bool	handle_property(char *ptr, t_scene *scene)
 {
-	if (strncmp(ptr, "A", 1) == 0 && (ptr[1] == ' ' || ptr[1] == '\t'))
+	if (ft_strncmp(ptr, "A", 1) == 0 && (ptr[1] == ' ' || ptr[1] == '\t'))
 		parse_ambient(&ptr, &scene->ambient);
-	else if (strncmp(ptr, "C", 1) == 0 && (ptr[1] == ' ' || ptr[1] == '\t'))
+	else if (ft_strncmp(ptr, "C", 1) == 0 && (ptr[1] == ' ' || ptr[1] == '\t'))
 		parse_camera(&ptr, &scene->camera);
-	else if (strncmp(ptr, "L", 1) == 0 && (ptr[1] == ' ' || ptr[1] == '\t'))
+	else if (ft_strncmp(ptr, "L", 1) == 0 && (ptr[1] == ' ' || ptr[1] == '\t'))
 		parse_light(&ptr, &scene->light);
-	else if (strncmp(ptr, "sp", 2) == 0 && (ptr[2] == ' ' || ptr[2] == '\t'))
+	else if (ft_strncmp(ptr, "sp", 2) == 0 && (ptr[2] == ' ' || ptr[2] == '\t'))
 		parse_sphere(&ptr, &scene->sphere);
-	else if (strncmp(ptr, "pl", 2) == 0 && (ptr[2] == ' ' || ptr[2] == '\t'))
+	else if (ft_strncmp(ptr, "pl", 2) == 0 && (ptr[2] == ' ' || ptr[2] == '\t'))
 		parse_plane(&ptr, &scene->plane);
-	else if (strncmp(ptr, "cy", 2) == 0 && (ptr[2] == ' ' || ptr[2] == '\t'))
+	else if (ft_strncmp(ptr, "cy", 2) == 0 && (ptr[2] == ' ' || ptr[2] == '\t'))
 		parse_cylinder(&ptr, &scene->cylinder);
 	else
 		return (false);

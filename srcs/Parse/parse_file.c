@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlobun <rlobun@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 17:01:01 by rlobun            #+#    #+#             */
-/*   Updated: 2026/04/05 17:01:07 by rlobun           ###   ########.fr       */
+/*   Updated: 2026/04/06 20:41:02 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static void	validate_extension(char **av)
 	int		len;
 	bool	valid_ext;
 
-	len = strlen(av[1]);
+	len = ft_strlen(av[1]);
 	valid_ext = false;
-	if (len >= 3 && strncmp(av[1] + len - 3, ".rt", 3) == 0)
+	if (len >= 3 && ft_strncmp(av[1] + len - 3, ".rt", 3) == 0)
 		valid_ext = true;
-	else if (len >= 2 && strncmp(av[1] + len - 2, ".r", 2) == 0)
+	else if (len >= 2 && ft_strncmp(av[1] + len - 2, ".r", 2) == 0)
 		valid_ext = true;
 	if (!valid_ext)
 	{
