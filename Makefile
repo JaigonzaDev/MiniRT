@@ -52,21 +52,7 @@ SAN_FLAGS	= -fsanitize=address,undefined -fno-omit-frame-pointer
 
 all: $(NAME)
 
-sani: CFLAGS += $(SAN_FLAGS)
-sani: LDFLAGS += $(SAN_FLAGS)
-sani: re
-
-info:
-	@echo "Building for: Linux"
-	@echo "MLX Directory: $(MLX_DIR)"
-	@echo "LDFLAGS: $(LDFLAGS)"
-
 $(MLX_DIR)/libmlx.a:
-	@if [ -z "$(ls -A $(MLX_DIR))" ]; then \
-		echo "MLX directory is empty, cloning repository..."; \
-		git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
-	fi
-	@echo "Building MLX..."
 	@make -C $(MLX_DIR)
 
 $(GNL_LIB):
@@ -109,4 +95,4 @@ fclean:
 
 re: fclean all
 
-.PHONY: all clean fclean re info help
+.PHONY: all clean fclean re info helpdofpkaafda
