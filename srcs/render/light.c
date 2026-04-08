@@ -6,7 +6,7 @@
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:12:20 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/05 12:14:12 by jaigonza         ###   ########.fr       */
+/*   Updated: 2026/04/08 19:31:02 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,21 @@ t_color	ft_ambient_light(t_color color, double ratio)
 bool	ft_is_shadowed(t_scene *scene, t_hit *closest)
 {
 	t_vector	light_dir;
+	t_vector	light_dir_norm;
 	t_ray		ray;
+	t_hit		shadow_hit;
 	double		light_distance;
 
 	light_dir = vector_sub(scene->light.light_point, closest->point);
 	light_distance = vector_length(light_dir);
+	light_dir_norm = vector_normal(light_dir);
 	ray.origin = vector_add(closest->point,
-			(t_vector){EPSILON, EPSILON, EPSILON});
-	ray.direction = vector_normal(light_dir);
-	(void)light_distance;
-	(void)ray;
-	(void)light_dir;
+			vector_scale(light_dir_norm, EPSILON));
+	ray.direction = light_dir_norm;
+	shadow_hit.t = light_distance - EPSILON;
+	shadow_hit.shape = NULL;
+	if (ft_obj_hit(scene, &ray, &shadow_hit) && shadow_hit.t < light_distance)
+		return (true);
 	return (false);
 }
 

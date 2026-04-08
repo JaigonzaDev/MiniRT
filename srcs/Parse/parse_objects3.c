@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlobun <rlobun@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:12:43 by rlobun            #+#    #+#             */
-/*   Updated: 2026/04/05 17:03:00 by rlobun           ###   ########.fr       */
+/*   Updated: 2026/04/08 19:38:58 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,26 @@ static t_cylinder	*create_cylinder_node(char **line)
 	insert_data_vector(line, &new_node->center);
 	skip_space(line);
 	insert_data_vector(line, &new_node->normalized);
+	if (vector_length(new_node->normalized) <= EPSILON)
+	{
+		printf("Error\nCylinder axis vector cannot be zero\n");
+		exit(1);
+	}
+	new_node->normalized = vector_normal(new_node->normalized);
 	skip_space(line);
 	new_node->diameter = get_double(line);
+	if (new_node->diameter <= EPSILON)
+	{
+		printf("Error\nCylinder diameter must be > 0\n");
+		exit(1);
+	}
 	skip_space(line);
 	new_node->height = get_double(line);
+	if (new_node->height <= EPSILON)
+	{
+		printf("Error\nCylinder height must be > 0\n");
+		exit(1);
+	}
 	skip_space(line);
 	insert_data_vector(line, &new_node->rgb);
 	validate_line_end(line);
