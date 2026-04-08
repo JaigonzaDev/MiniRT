@@ -6,7 +6,7 @@
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:12:15 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/05 12:14:13 by jaigonza         ###   ########.fr       */
+/*   Updated: 2026/04/08 17:25:49 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 void	ft_init_viewport(t_scene *scene)
 {
+	double	aspect;
+
+	aspect = (double)WIDTH / (double)HEIGHT;
 	scene->camera.wview = tan((scene->camera.fov / 2.0) * PI / 180.0);
-	scene->camera.hview = scene->camera.wview / RATIO;
+	scene->camera.hview = scene->camera.wview / aspect;
 	scene->camera.right = vector_normal(vector_crossproduct(
 				scene->camera.orientation, (t_vector){0.0, 1.0, 0.0}));
 	scene->camera.up = vector_normal(vector_crossproduct(
