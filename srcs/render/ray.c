@@ -6,7 +6,7 @@
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:12:15 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/08 17:25:49 by jaigonza         ###   ########.fr       */
+/*   Updated: 2026/04/08 19:38:58 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,22 @@
 void	ft_init_viewport(t_scene *scene)
 {
 	double	aspect;
+	t_vector	world_up;
+	t_vector	fallback_up;
+	double		alignment;
 
 	aspect = (double)WIDTH / (double)HEIGHT;
 	scene->camera.wview = tan((scene->camera.fov / 2.0) * PI / 180.0);
 	scene->camera.hview = scene->camera.wview / aspect;
+	world_up = (t_vector){0.0, 1.0, 0.0};
+	fallback_up = (t_vector){0.0, 0.0, 1.0};
+	alignment = fabs(vector_dotproduct(scene->camera.orientation, world_up));
+	if (alignment > 0.999)
+		world_up = fallback_up;
 	scene->camera.right = vector_normal(vector_crossproduct(
-				scene->camera.orientation, (t_vector){0.0, 1.0, 0.0}));
+				world_up, scene->camera.orientation));
 	scene->camera.up = vector_normal(vector_crossproduct(
 				scene->camera.orientation, scene->camera.right));
-	scene->camera.right = vector_normal(vector_crossproduct(
-				scene->camera.orientation, scene->camera.up));
 }
 
 t_vector	ft_canvas_to_viewport(int x, int y)
@@ -36,8 +42,8 @@ t_vector	ft_canvas_to_viewport(int x, int y)
 
 	width = WIDTH;
 	height = HEIGHT;
-	converted.x = ((2.0 * x) / width) - 1;
-	converted.y = ((2.0 * y) / height) - 1;
+	converted.x = (2.0 * ((x + 0.5) / width)) - 1.0;
+	converted.y = 1.0 - (2.0 * ((y + 0.5) / height));
 	converted.z = 0;
 	return (converted);
 }

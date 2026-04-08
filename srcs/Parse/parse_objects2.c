@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlobun <rlobun@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 17:02:31 by rlobun            #+#    #+#             */
-/*   Updated: 2026/04/05 17:02:35 by rlobun           ###   ########.fr       */
+/*   Updated: 2026/04/08 19:38:58 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static t_plane	*create_plane_node(char **line)
 	insert_data_vector(line, &new_node->point);
 	skip_space(line);
 	insert_data_vector(line, &new_node->normalized);
+	if (vector_length(new_node->normalized) <= EPSILON)
+	{
+		printf("Error\nPlane normal vector cannot be zero\n");
+		exit(1);
+	}
+	new_node->normalized = vector_normal(new_node->normalized);
 	skip_space(line);
 	insert_data_vector(line, &new_node->rgb);
 	validate_line_end(line);

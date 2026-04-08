@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlobun <rlobun@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:12:50 by rlobun            #+#    #+#             */
-/*   Updated: 2026/04/05 17:03:59 by rlobun           ###   ########.fr       */
+/*   Updated: 2026/04/08 19:38:58 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static t_sphere	*create_sphere_node(char **line)
 	insert_data_vector(line, &new_node->center);
 	skip_space(line);
 	new_node->diameter = get_double(line);
+	if (new_node->diameter <= EPSILON)
+	{
+		printf("Error\nSphere diameter must be > 0\n");
+		exit(1);
+	}
 	skip_space(line);
 	insert_data_vector(line, &new_node->rgb);
 	validate_line_end(line);
