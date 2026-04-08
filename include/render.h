@@ -6,7 +6,7 @@
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:13:34 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/08 17:25:49 by jaigonza         ###   ########.fr       */
+/*   Updated: 2026/04/08 17:42:12 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ struct	s_scene;
 # endif
 # define EPSILON 0.0001
 
-# define WIDTH 700
+# define WIDTH 900
 # define HEIGHT 700
 
 typedef struct s_color
