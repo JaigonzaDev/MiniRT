@@ -15,26 +15,26 @@ LIBFT_LIB	= $(LIBFT_DIR)/lib/Libft/libft.a
 # Source files
 SOURCES		= main.c \
 	cleanup.c \
-Graph/mlx_init.c \
-Graph/mlx_loop.c \
-Objects/cylinder.c \
-Objects/plane.c \
-Objects/sphere.c \
-Parse/parse_objects.c \
-Parse/parse_objects2.c \
-Parse/parse_objects3.c \
-Parse/parse_file.c \
-Parse/parse_physics.c \
-Parse/parse_properties.c \
-Parse/parse_utils.c \
+graph/mlx_init.c \
+graph/mlx_loop.c \
+objects/cylinder.c \
+objects/plane.c \
+objects/sphere.c \
+parse/parse_objects.c \
+parse/parse_objects2.c \
+parse/parse_objects3.c \
+parse/parse_file.c \
+parse/parse_physics.c \
+parse/parse_properties.c \
+parse/parse_utils.c \
 render/color.c \
 render/light.c \
 render/pixel.c \
 render/ray.c \
 render/render.c \
 render/render_utils.c \
-Vector/vector_basic_operations.c \
-Vector/vector_calculation_operations.c \
+vector/vector_basic_operations.c \
+vector/vector_calculation_operations.c \
 intersection/utils.c \
 intersection/plane_intersection.c \
 intersection/cylinder_intersection.c \
@@ -108,4 +108,4 @@ fclean:
 
 re: fclean all
 
-.PHONY: all clean fclean re info helpdofpkaafda
+.PHONY: all clean fclean re
