@@ -15,10 +15,10 @@
 
 void	ft_init_viewport(t_scene *scene)
 {
-	double	aspect;
+	double		aspect;
+	double		alignment;
 	t_vector	world_up;
 	t_vector	fallback_up;
-	double		alignment;
 
 	aspect = (double)WIDTH / (double)HEIGHT;
 	scene->camera.wview = tan((scene->camera.fov / 2.0) * PI / 180.0);

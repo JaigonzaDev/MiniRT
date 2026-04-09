@@ -6,7 +6,7 @@
 /*   By: jaigonza <jaigonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:13:57 by jaigonza          #+#    #+#             */
-/*   Updated: 2026/04/08 17:22:38 by jaigonza         ###   ########.fr       */
+/*   Updated: 2026/04/09 18:53:06 by jaigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "vector.h"
 # include <math.h>
+
 typedef struct s_camera
 {
 	t_vector	center;
@@ -35,9 +36,6 @@ typedef struct s_viewport
 	double		wview;
 }				t_viewport;
 
-/* ************************************************************************** */
-/*                              FUNCTION DECLARATIONS                         */
-/* ************************************************************************** */
 void		init_viewport(t_camera *camera, t_viewport *viewport);
 t_vector	canvas_to_viewport(int x, int y);
 t_ray		cast_ray(t_camera *camera, t_viewport *viewport, t_vector factors);
