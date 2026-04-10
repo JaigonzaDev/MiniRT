@@ -47,7 +47,9 @@ void	parse(char **av, t_scene *scene)
 {
 	int		fd;
 	char	*line;
+	bool	has_error;
 
+	has_error = false;
 	if (av == NULL || *av == NULL || av[1] == NULL)
 		exit(1);
 	validate_extension(av);
@@ -57,8 +59,15 @@ void	parse(char **av, t_scene *scene)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		parse_properties(line, scene);
+		if (!has_error)
+			if (!parse_properties(line, scene))
+				has_error = true;
 		free(line);
 	}
 	close(fd);
+	if (has_error)
+	{
+		cleanup_scene(scene);
+		exit(1);
+	}
 }

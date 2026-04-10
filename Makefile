@@ -20,9 +20,9 @@ graph/mlx_loop.c \
 objects/cylinder.c \
 objects/plane.c \
 objects/sphere.c \
-parse/parse_objects.c \
-parse/parse_objects2.c \
-parse/parse_objects3.c \
+parse/parse_sphere.c \
+parse/parse_plane.c \
+parse/parse_cylinder.c \
 parse/parse_file.c \
 parse/parse_physics.c \
 parse/parse_properties.c \

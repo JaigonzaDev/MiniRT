@@ -12,69 +12,77 @@
 
 #include "main.h"
 
-static void	parse_error(const char *msg)
+static bool	parse_error(const char *msg)
 {
 	printf("Error\n%s\n", msg);
-	exit(1);
+	return (false);
 }
 
-void	parse_ambient(char **line, t_ambient *scene)
+bool	parse_ambient(char **line, t_ambient *scene)
 {
 	if (scene->id != NULL)
 	{
 		printf("Error\nAmbient lighting declared more than once\n");
-		exit(1);
+		return (false);
 	}
 	scene->id = "A";
 	(*line)++;
 	skip_space(line);
-	scene->light_ratio = get_double(line);
+	if (!get_double(line, &scene->light_ratio))
+		return (false);
 	if (scene->light_ratio < 0.0 || scene->light_ratio > 1.0)
-		parse_error("Ambient light ratio must be in [0.0, 1.0]");
+		return (parse_error("Ambient light ratio must be in [0.0, 1.0]"));
 	skip_space(line);
-	insert_data_vector(line, &scene->rgb);
-	validate_line_end(line);
+	if (!insert_data_vector(line, &scene->rgb))
+		return (false);
+	return (validate_line_end(line));
 }
 
-void	parse_camera(char **line, t_camera *scene)
+bool	parse_camera(char **line, t_camera *scene)
 {
 	if (scene->id != NULL)
 	{
 		printf("Error\nCamera declared more than once\n");
-		exit(1);
+		return (false);
 	}
 	scene->id = "C";
 	(*line)++;
 	skip_space(line);
-	insert_data_vector(line, &scene->viewpoint);
+	if (!insert_data_vector(line, &scene->viewpoint))
+		return (false);
 	skip_space(line);
-	insert_data_vector(line, &scene->orientation);
+	if (!insert_data_vector(line, &scene->orientation))
+		return (false);
 	if (vector_length(scene->orientation) <= EPSILON)
-		parse_error("Camera orientation vector cannot be zero");
+		return (parse_error("Camera orientation vector cannot be zero"));
 	scene->orientation = vector_normal(scene->orientation);
 	skip_space(line);
-	scene->fov = get_double(line);
+	if (!get_double(line, &scene->fov))
+		return (false);
 	if (scene->fov <= 0.0 || scene->fov >= 180.0)
-		parse_error("Camera FOV must be in (0, 180)");
-	validate_line_end(line);
+		return (parse_error("Camera FOV must be in (0, 180)"));
+	return (validate_line_end(line));
 }
 
-void	parse_light(char **line, t_light *scene)
+bool	parse_light(char **line, t_light *scene)
 {
 	if (scene->id != NULL)
 	{
 		printf("Error\nLight declared more than once\n");
-		exit(1);
+		return (false);
 	}
 	scene->id = "L";
 	(*line)++;
 	skip_space(line);
-	insert_data_vector(line, &scene->light_point);
+	if (!insert_data_vector(line, &scene->light_point))
+		return (false);
 	skip_space(line);
-	scene->brightness = get_double(line);
+	if (!get_double(line, &scene->brightness))
+		return (false);
 	if (scene->brightness < 0.0 || scene->brightness > 1.0)
-		parse_error("Light brightness must be in [0.0, 1.0]");
+		return (parse_error("Light brightness must be in [0.0, 1.0]"));
 	skip_space(line);
-	insert_data_vector(line, &scene->rgb);
-	validate_line_end(line);
+	if (!insert_data_vector(line, &scene->rgb))
+		return (false);
+	return (validate_line_end(line));
 }

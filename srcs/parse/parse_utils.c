@@ -36,7 +36,7 @@ static void	read_fraction(char **line, double *result, int *has_digits)
 	}
 }
 
-double	get_double(char **line)
+bool	get_double(char **line, double *out)
 {
 	double	result;
 	double	sign;
@@ -60,35 +60,26 @@ double	get_double(char **line)
 	}
 	read_fraction(line, &result, &has_digits);
 	if (!has_digits)
-		(printf("Error\nInvalid numeric value in scene file\n"), exit(1));
-	return (result * sign);
+		return (printf("Error\nInvalid numeric value in scene\n"), false);
+	*out = result * sign;
+	return (true);
 }
 
-void	insert_data_vector(char **line, t_vector *vector)
+bool	insert_data_vector(char **line, t_vector *vector)
 {
-	vector->x = get_double(line);
-	if (**line != ',')
-	{
-		printf("Error\nInvalid vector format\n");
-		exit(1);
-	}
+	if (!get_double(line, &vector->x) || **line != ',')
+		return (printf("Error\nInvalid vector format\n"), false);
 	(*line)++;
-	vector->y = get_double(line);
-	if (**line != ',')
-	{
-		printf("Error\nInvalid vector format\n");
-		exit(1);
-	}
+	if (!get_double(line, &vector->y) || **line != ',')
+		return (printf("Error\nInvalid vector format\n"), false);
 	(*line)++;
-	vector->z = get_double(line);
+	return (get_double(line, &vector->z));
 }
 
-void	validate_line_end(char **line)
+bool	validate_line_end(char **line)
 {
 	skip_space(line);
 	if (**line != '\0' && **line != '\n')
-	{
-		printf("Error\nUnexpected trailing characters in scene line\n");
-		exit(1);
-	}
+		return (printf("Error\nUnexpected trailing chars\n"), false);
+	return (true);
 }
