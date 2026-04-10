@@ -12,29 +12,40 @@
 
 #include "main.h"
 
+static bool	init_plane_node(t_plane *new_node, char **line)
+{
+	(*line) += 2;
+	skip_space(line);
+	if (!insert_data_vector(line, &new_node->point))
+		return (false);
+	skip_space(line);
+	if (!insert_data_vector(line, &new_node->normalized))
+		return (false);
+	if (vector_length(new_node->normalized) <= EPSILON)
+	{
+		printf("Error\nPlane normal vector cannot be zero\n");
+		return (false);
+	}
+	new_node->normalized = vector_normal(new_node->normalized);
+	skip_space(line);
+	if (!insert_data_vector(line, &new_node->rgb))
+		return (false);
+	if (!validate_line_end(line))
+		return (false);
+	return (true);
+}
+
 static t_plane	*create_plane_node(char **line)
 {
 	t_plane	*new_node;
 
 	new_node = malloc(sizeof(t_plane));
 	if (!new_node)
-		exit(1);
+		return (NULL);
 	new_node->next = NULL;
 	new_node->id = "pl";
-	(*line) += 2;
-	skip_space(line);
-	insert_data_vector(line, &new_node->point);
-	skip_space(line);
-	insert_data_vector(line, &new_node->normalized);
-	if (vector_length(new_node->normalized) <= EPSILON)
-	{
-		printf("Error\nPlane normal vector cannot be zero\n");
-		exit(1);
-	}
-	new_node->normalized = vector_normal(new_node->normalized);
-	skip_space(line);
-	insert_data_vector(line, &new_node->rgb);
-	validate_line_end(line);
+	if (!init_plane_node(new_node, line))
+		return (free(new_node), NULL);
 	return (new_node);
 }
 
@@ -53,7 +64,13 @@ static void	append_plane(t_plane **list, t_plane *new_node)
 	tmp->next = new_node;
 }
 
-void	parse_plane(char **line, t_plane **list)
+bool	parse_plane(char **line, t_plane **list)
 {
-	append_plane(list, create_plane_node(line));
+	t_plane	*node;
+
+	node = create_plane_node(line);
+	if (!node)
+		return (false);
+	append_plane(list, node);
+	return (true);
 }

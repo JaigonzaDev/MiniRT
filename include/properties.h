@@ -13,12 +13,13 @@
 #ifndef PROPERTIES_H
 # define PROPERTIES_H
 
+# include <stdbool.h>
+
 # include "libft.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include "get_next_line.h"
 # include "vector.h"
 # include "objects.h"
@@ -53,19 +54,19 @@ typedef struct s_light
 struct	s_scene;
 
 void	skip_space(char **line);
-double	get_double(char **line);
-void	insert_data_vector(char **line, t_vector *vector);
-void	validate_line_end(char **line);
+bool	get_double(char **line, double *out);
+bool	insert_data_vector(char **line, t_vector *vector);
+bool	validate_line_end(char **line);
 
-void	parse_ambient(char **line, t_ambient *scene);
-void	parse_camera(char **line, t_camera *scene);
-void	parse_light(char **line, t_light *scene);
+bool	parse_ambient(char **line, t_ambient *scene);
+bool	parse_camera(char **line, t_camera *scene);
+bool	parse_light(char **line, t_light *scene);
 
-void	parse_sphere(char **line, t_sphere **list);
-void	parse_plane(char **line, t_plane **list);
-void	parse_cylinder(char **line, t_cylinder **list);
+bool	parse_sphere(char **line, t_sphere **list);
+bool	parse_plane(char **line, t_plane **list);
+bool	parse_cylinder(char **line, t_cylinder **list);
 
-void	parse_properties(char *line, struct s_scene *scene);
+bool	parse_properties(char *line, struct s_scene *scene);
 void	parse(char **av, struct s_scene *scene);
 
 #endif
