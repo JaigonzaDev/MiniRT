@@ -42,6 +42,8 @@ static bool	init_cylinder_node(t_cylinder *new_node, char **line)
 	skip_space(line);
 	if (!insert_data_vector(line, &new_node->normalized))
 		return (false);
+	if (!validate_normalized_vector(new_node->normalized))
+		return (printf("Error\nCylinder axis out of bounds [-1, 1]\n"), false);
 	skip_space(line);
 	if (!get_double(line, &new_node->diameter))
 		return (false);
@@ -51,9 +53,9 @@ static bool	init_cylinder_node(t_cylinder *new_node, char **line)
 	skip_space(line);
 	if (!insert_data_vector(line, &new_node->rgb))
 		return (false);
-	if (!validate_line_end(line))
-		return (false);
-	if (!validate_cylinder(new_node))
+	if (!validate_rgb(new_node->rgb))
+		return (printf("Error\nCylinder RGB out of range [0-255]\n"), false);
+	if (!validate_line_end(line) || !validate_cylinder(new_node))
 		return (false);
 	return (true);
 }

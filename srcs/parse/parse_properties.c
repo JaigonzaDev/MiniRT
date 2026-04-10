@@ -18,6 +18,28 @@ static bool	is_comment_or_empty(char *ptr)
 	return (*ptr == '\0' || *ptr == '\n' || *ptr == '#');
 }
 
+bool	validate_rgb(t_vector color)
+{
+	if (color.x < 0.0 || color.x > 255.0)
+		return (false);
+	if (color.y < 0.0 || color.y > 255.0)
+		return (false);
+	if (color.z < 0.0 || color.z > 255.0)
+		return (false);
+	return (true);
+}
+
+bool	validate_normalized_vector(t_vector vec)
+{
+	if (vec.x < -1.0 || vec.x > 1.0)
+		return (false);
+	if (vec.y < -1.0 || vec.y > 1.0)
+		return (false);
+	if (vec.z < -1.0 || vec.z > 1.0)
+		return (false);
+	return (true);
+}
+
 static bool	handle_property(char *ptr, t_scene *scene)
 {
 	if (ft_strncmp(ptr, "A", 1) == 0 && (ptr[1] == ' ' || ptr[1] == '\t'))

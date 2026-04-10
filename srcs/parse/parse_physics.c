@@ -35,6 +35,8 @@ bool	parse_ambient(char **line, t_ambient *scene)
 	skip_space(line);
 	if (!insert_data_vector(line, &scene->rgb))
 		return (false);
+	if (!validate_rgb(scene->rgb))
+		return (parse_error("Ambient RGB out of range [0-255]"));
 	return (validate_line_end(line));
 }
 
@@ -53,6 +55,8 @@ bool	parse_camera(char **line, t_camera *scene)
 	skip_space(line);
 	if (!insert_data_vector(line, &scene->orientation))
 		return (false);
+	if (!validate_normalized_vector(scene->orientation))
+		return (parse_error("Camera orientation vector out of bounds [-1, 1]"));
 	if (vector_length(scene->orientation) <= EPSILON)
 		return (parse_error("Camera orientation vector cannot be zero"));
 	scene->orientation = vector_normal(scene->orientation);
@@ -84,5 +88,7 @@ bool	parse_light(char **line, t_light *scene)
 	skip_space(line);
 	if (!insert_data_vector(line, &scene->rgb))
 		return (false);
+	if (!validate_rgb(scene->rgb))
+		return (parse_error("Light RGB out of range [0-255]"));
 	return (validate_line_end(line));
 }
