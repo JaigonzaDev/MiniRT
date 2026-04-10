@@ -12,6 +12,27 @@
 
 #include "main.h"
 
+static bool	init_sphere_node(t_sphere *new_node, char **line)
+{
+	(*line) += 2;
+	skip_space(line);
+	if (!insert_data_vector(line, &new_node->center))
+		return (false);
+	skip_space(line);
+	if (!get_double(line, &new_node->diameter))
+		return (false);
+	if (new_node->diameter <= EPSILON)
+		return (printf("Error\nSphere diameter must be > 0\n"), false);
+	skip_space(line);
+	if (!insert_data_vector(line, &new_node->rgb))
+		return (false);
+	if (!validate_rgb(new_node->rgb))
+		return (printf("Error\nSphere RGB out of range [0-255]\n"), false);
+	if (!validate_line_end(line))
+		return (false);
+	return (true);
+}
+
 static t_sphere	*create_sphere_node(char **line)
 {
 	t_sphere	*new_node;
@@ -21,22 +42,7 @@ static t_sphere	*create_sphere_node(char **line)
 		return (NULL);
 	new_node->next = NULL;
 	new_node->id = "sp";
-	(*line) += 2;
-	skip_space(line);
-	if (!insert_data_vector(line, &new_node->center))
-		return (free(new_node), NULL);
-	skip_space(line);
-	if (!get_double(line, &new_node->diameter))
-		return (free(new_node), NULL);
-	if (new_node->diameter <= EPSILON)
-	{
-		printf("Error\nSphere diameter must be > 0\n");
-		return (free(new_node), NULL);
-	}
-	skip_space(line);
-	if (!insert_data_vector(line, &new_node->rgb))
-		return (free(new_node), NULL);
-	if (!validate_line_end(line))
+	if (!init_sphere_node(new_node, line))
 		return (free(new_node), NULL);
 	return (new_node);
 }

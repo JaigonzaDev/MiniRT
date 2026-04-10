@@ -58,6 +58,9 @@ bool	get_double(char **line, double *out);
 bool	insert_data_vector(char **line, t_vector *vector);
 bool	validate_line_end(char **line);
 
+bool	validate_rgb(t_vector color);
+bool	validate_normalized_vector(t_vector vec);
+
 bool	parse_ambient(char **line, t_ambient *scene);
 bool	parse_camera(char **line, t_camera *scene);
 bool	parse_light(char **line, t_light *scene);
